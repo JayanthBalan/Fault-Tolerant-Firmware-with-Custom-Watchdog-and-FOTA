@@ -1,0 +1,5 @@
+
+IP Address : Command Prompt > ipconfig
+Navigation : terminal > cd ota_server
+Begin : terminal > python -m http.server 8000
+End : terminal > [ctrl + c]
