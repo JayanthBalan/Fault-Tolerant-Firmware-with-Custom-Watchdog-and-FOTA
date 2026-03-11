@@ -1,117 +1,103 @@
 
 #include "ota_ops.h"
 
+//Manifest descriptor
+typedef struct {
+    char version[VERSION_STR_LEN];
+    char sha256[SHA256_HEX_LEN + 1];
+    uint32_t size;
+    char url[FIRMWARE_URL_LEN];
+} ota_manifest_t;
+
+//Globals
 static EventGroupHandle_t conn_stat;
 static int retry_cnt = 0;
 static const char *TAG = "OTA_OPS";
-const uint8_t auth_token[] = "SECURE_KEY---JUGGERNAUT_AUTH_2026_X99";
 
+//Function Prototypes
+static void wifi_event_handler(void*, esp_event_base_t, int32_t, void*);
+static esp_err_t version_get(char*, size_t);
+static esp_err_t version_set(const char*);
+static int version_compare(const char*, const char*);
+static esp_err_t fetch_manifest(ota_manifest_t*);
+static bool update_decision(const ota_manifest_t*);
+void blacklist_version_fetch(const char*);
+static bool blacklist_check(const char*);
+esp_err_t http_event_handler(esp_http_client_event_t *evt);
 void wifi_init_sta(void);
 void app_download(void);
 void ota_gatekeep(void);
-bool token_handshake(void);
-int8_t version_data(void);
-esp_err_t http_event_handler(esp_http_client_event_t*);
-static void wifi_event_handler(void*, esp_event_base_t, int32_t, void*);
-int8_t client_authenticate(uint8_t*, const uint8_t*);
 
+//Initialization point
 void ota_ops_init(void)
 {
-    //Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
-    ESP_LOGI(TAG, "NVS Initialized.");
+    ESP_LOGI(TAG, "NVS initialized.");
 
-    //Initialize WiFi
     wifi_init_sta();
-
-    //Call OTA Update
     ota_gatekeep();
-    
-    vTaskDelay(pdMS_TO_TICKS(5000));
-
-    //OTA Function
+    vTaskDelay(pdMS_TO_TICKS(500));
     app_download();
 }
 
-void version_update(int8_t type)
+//NVS version helpers
+static esp_err_t version_get(char *buf, size_t len)
 {
-    nvs_handle_t nvs_handle_0;
-    ESP_ERROR_CHECK(nvs_open("ota", NVS_READWRITE, &nvs_handle_0));
-
-    if(type == 0) {
-        ESP_ERROR_CHECK(nvs_set_u8(nvs_handle_0, NVS_VERSION_KEY, 1));
-        ESP_ERROR_CHECK(nvs_commit(nvs_handle_0));
-        nvs_close(nvs_handle_0);
-        return;
+    nvs_handle_t h;
+    esp_err_t err = nvs_open(NVS_OTA_NAMESPACE, NVS_READONLY, &h);
+    if (err != ESP_OK) {
+        strncpy(buf, NVS_VER_DEFAULT, len - 1);
+        buf[len - 1] = '\0';
+        return ESP_OK;
     }
-
-    uint8_t ver = 1;
-    esp_err_t err = nvs_get_u8(nvs_handle_0, NVS_VERSION_KEY, &ver);
-    switch (err) {
-        case ESP_OK:
-            ESP_LOGI("TAG", "Client Version: %d", ver);
-            break;
-        case ESP_ERR_NVS_NOT_FOUND:
-            ESP_LOGW("TAG", "Initialized");
-            ESP_ERROR_CHECK(nvs_set_u8(nvs_handle_0, NVS_VERSION_KEY, 1));
-            nvs_close(nvs_handle_0);
-            version_update(0);
-            return;
-            break;
-        case ESP_ERR_NVS_INVALID_NAME:
-            ESP_LOGE("TAG", "Invalid name!");
-            nvs_close(nvs_handle_0);
-            return;
-            break;
-        default:
-            ESP_LOGE("TAG", "Error (%s) reading!", esp_err_to_name(err));
-            nvs_close(nvs_handle_0);
-            return;
+    err = nvs_get_str(h, NVS_VER_KEY, buf, &len);
+    nvs_close(h);
+    if (err == ESP_ERR_NVS_NOT_FOUND) {
+        strncpy(buf, NVS_VER_DEFAULT, len - 1);
+        buf[len - 1] = '\0';
+        return ESP_OK;
     }
-
-    ESP_ERROR_CHECK(nvs_set_u8(nvs_handle_0, NVS_VERSION_KEY, (int8_t)ver + type));
-    ESP_ERROR_CHECK(nvs_commit(nvs_handle_0));
-
-    nvs_close(nvs_handle_0);
+    return err;
 }
 
-int8_t version_data(void) {
-    nvs_handle_t nvs_handle;
-    ESP_ERROR_CHECK(nvs_open("ota", NVS_READWRITE, &nvs_handle));
-
-    uint8_t ver = 0;
-    esp_err_t err = nvs_get_u8(nvs_handle, NVS_VERSION_KEY, &ver);
-    switch (err) {
-        case ESP_OK:
-            ESP_LOGI(TAG, "Client Firmware Version: %d", ver);
-            break;
-        case ESP_ERR_NVS_NOT_FOUND:
-            ESP_LOGW(TAG, "Uninitialized");
-            nvs_close(nvs_handle);
-            version_update(0);
-            return 1;
-            break;
-        case ESP_ERR_NVS_INVALID_NAME:
-            ESP_LOGE(TAG, "Invalid name!");
-            nvs_close(nvs_handle);
-            return -1;
-            break;
-        default:
-            ESP_LOGE(TAG, "Error (%s) reading!", esp_err_to_name(err));
-            nvs_close(nvs_handle);
-            return -2;
+static esp_err_t version_set(const char *ver)
+{
+    nvs_handle_t h;
+    esp_err_t err = nvs_open(NVS_OTA_NAMESPACE, NVS_READWRITE, &h);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "version_set: nvs_open failed (%s)", esp_err_to_name(err));
+        return err;
     }
-
-    nvs_close(nvs_handle);
-    return (int8_t)ver;
+    err = nvs_set_str(h, NVS_VER_KEY, ver);
+    if (err == ESP_OK) {
+        nvs_commit(h);
+    }
+    else {
+        ESP_LOGE(TAG, "version_set: nvs_set_str failed (%s)", esp_err_to_name(err));
+    }
+    nvs_close(h);
+    return err;
 }
 
-esp_err_t http_event_handler(esp_http_client_event_t *evt) //HTTP Event Callback
+static int version_compare(const char *v1, const char *v2)
+{
+    int maj1 = 0, min1 = 0, pat1 = 0;
+    int maj2 = 0, min2 = 0, pat2 = 0;
+    sscanf(v1, "%d.%d.%d", &maj1, &min1, &pat1);
+    sscanf(v2, "%d.%d.%d", &maj2, &min2, &pat2);
+    if (maj1 != maj2) return (maj1 > maj2) ? 1 : -1;
+    if (min1 != min2) return (min1 > min2) ? 1 : -1;
+    if (pat1 != pat2) return (pat1 > pat2) ? 1 : -1;
+    return 0;
+}
+
+//Logging Handlers
+esp_err_t http_event_handler(esp_http_client_event_t *evt)
 {
     switch (evt->event_id) {
         case HTTP_EVENT_ERROR:
@@ -124,10 +110,10 @@ esp_err_t http_event_handler(esp_http_client_event_t *evt) //HTTP Event Callback
             ESP_LOGD(TAG, "HTTP_EVENT_HEADER_SENT");
             break;
         case HTTP_EVENT_ON_HEADER:
-            ESP_LOGD(TAG, "HTTP_EVENT_ON_HEADER, key=%s, value=%s", evt->header_key, evt->header_value);
+            ESP_LOGD(TAG, "HTTP_EVENT_ON_HEADER  key=%s  value=%s", evt->header_key, evt->header_value);
             break;
         case HTTP_EVENT_ON_DATA:
-            ESP_LOGD(TAG, "HTTP_EVENT_ON_DATA, len=%d", evt->data_len);
+            ESP_LOGD(TAG, "HTTP_EVENT_ON_DATA  len=%d", evt->data_len);
             break;
         case HTTP_EVENT_ON_FINISH:
             ESP_LOGD(TAG, "HTTP_EVENT_ON_FINISH");
@@ -142,273 +128,365 @@ esp_err_t http_event_handler(esp_http_client_event_t *evt) //HTTP Event Callback
     return ESP_OK;
 }
 
-static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data) //WiFi Event Callback
+static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
 {
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
         esp_wifi_connect();
-    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+    }
+    else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
         if (retry_cnt < MAX_RETRY) {
             vTaskDelay(pdMS_TO_TICKS(WIFI_RET_DEL));
             esp_wifi_connect();
             retry_cnt++;
-            ESP_LOGI(TAG, "Retry connecting to WiFi...");
+            ESP_LOGI(TAG, "Retry WiFi connection (%d/%d)", retry_cnt, MAX_RETRY);
         } else {
             xEventGroupSetBits(conn_stat, CONN_FAIL);
         }
-        ESP_LOGI(TAG,"Connection to WiFi failed");
-    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
-        ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
-        ESP_LOGI(TAG, "Got IP:" IPSTR, IP2STR(&event->ip_info.ip));
+        ESP_LOGI(TAG, "WiFi disconnected.");
+    }
+    else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+        ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
+        ESP_LOGI(TAG, "Got IP: " IPSTR, IP2STR(&event->ip_info.ip));
         retry_cnt = 0;
         xEventGroupSetBits(conn_stat, CONN_PASS);
     }
 }
 
-void wifi_init_sta(void) //WiFi Initialization
+//Initialization WiFi
+void wifi_init_sta(void)
 {
-    conn_stat = xEventGroupCreate(); //Signalling
+    conn_stat = xEventGroupCreate();
 
-    //TCP/IP Stack Initialization
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     esp_netif_create_default_wifi_sta();
 
-    //WiFi Driver Initialization
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&cfg));
 
-    //Register Event Handlers
     esp_event_handler_instance_t instance_any_id;
     esp_event_handler_instance_t instance_got_ip;
     ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL, &instance_any_id));
     ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL, &instance_got_ip));
 
-    //WiFi Credentials and Security
     wifi_config_t wifi_config = {};
-    strcpy((char*)wifi_config.sta.ssid, SSID);
-    strcpy((char*)wifi_config.sta.password, PASSWORD);
+    strcpy((char *)wifi_config.sta.ssid,     SSID);
+    strcpy((char *)wifi_config.sta.password, PASSWORD);
     wifi_config.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
-    wifi_config.sta.pmf_cfg.capable = true;
-    wifi_config.sta.pmf_cfg.required = false;
+    wifi_config.sta.pmf_cfg.capable    = true;
+    wifi_config.sta.pmf_cfg.required   = false;
 
-    //Begin WiFi State Machine
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
-    ESP_LOGI(TAG, "WiFi init finished.");
+    ESP_LOGI(TAG, "WiFi init Successful.");
 
-    //Block and Hard Sync
     EventBits_t bits = xEventGroupWaitBits(conn_stat, CONN_PASS | CONN_FAIL, pdFALSE, pdFALSE, portMAX_DELAY);
 
-    //Status Info
-    if (bits & CONN_PASS) {
-        ESP_LOGI(TAG, "Connected to WiFi SSID:%s", SSID);
-    } else if (bits & CONN_FAIL) {
-        ESP_LOGI(TAG, "Failed to connect to SSID:%s", SSID);
-    } else {
-        ESP_LOGE(TAG, "Unexpected WiFi event");
-    }
+    if (bits & CONN_PASS) ESP_LOGI(TAG, "Connected to SSID: %s", SSID);
+    else if (bits & CONN_FAIL) ESP_LOGE(TAG, "Failed to connect to SSID: %s", SSID);
+    else ESP_LOGE(TAG, "Unexpected WiFi event.");
 }
 
-int8_t client_authenticate(uint8_t *target, const uint8_t *reference) //Token Comparison
+//Manifest v/s JSON
+static esp_err_t fetch_manifest(ota_manifest_t *out)
 {
-    uint8_t ver_info = (target[1] -'0')*10 + (target[2] - '0');
-    ESP_LOGI(TAG, "Server Firmware Version: %d", ver_info);
+    char *resp_buf = (char *)malloc(MANIFEST_BUF_SIZE); //Heap allocation - Dynamic Memory
+    if (!resp_buf) {
+        ESP_LOGE(TAG, "Manifest: failed to allocate receive buffer.");
+        return ESP_ERR_NO_MEM;
+    }
+    memset(resp_buf, 0, MANIFEST_BUF_SIZE);
 
-    size_t token_len = strlen((char*)reference);
-    if (memcmp(&target[6], reference, AUTH_BUFFER_SIZE - VER_INFO_SIZE) != 0) {
-        ESP_LOGI(TAG, "Token Mismatch");
-        ESP_LOGI(TAG, "Expected: %s", reference);
-        ESP_LOGI(TAG, "Received: %.*s", (int)token_len, &target[6]);
-        return -1; //Failure
-    }
+    esp_http_client_config_t cfg = {};
+    memset(&cfg, 0, sizeof(cfg));
+    cfg.url = MANIFEST_URL;
+    cfg.event_handler = http_event_handler;
+    cfg.crt_bundle_attach = esp_crt_bundle_attach;
+    cfg.timeout_ms = OTA_HANDSHAKE_TIMEOUT;
 
-    int8_t curr_ver = version_data();
-    if(curr_ver == 0) {
-        ESP_LOGW(TAG, "Client Firmware Version: Uninitialized");
-        return 0; //Success
-    }
-    else if(curr_ver < 0) {
-        ESP_LOGE(TAG, "Auth Failed: Client Version Error.");
-        return -2; //Failure
-    }
-    else if(ver_info < curr_ver) {
-        ESP_LOGI(TAG, "Version mismatch: server=%d, client=%d", ver_info, curr_ver);
-        return 1; //Version Mismatch
+    esp_http_client_handle_t client = esp_http_client_init(&cfg);
+    esp_err_t err = esp_http_client_open(client, 0);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Manifest: HTTP open failed: %s", esp_err_to_name(err));
+        esp_http_client_cleanup(client);
+        free(resp_buf);
+        return ESP_FAIL;
     }
 
-    ESP_LOGI(TAG, "Auth Success: Token Verified.");
-    return 0;
+    int content_len = esp_http_client_fetch_headers(client);
+    if (content_len >= (int)(MANIFEST_BUF_SIZE - 1)) {
+        ESP_LOGE(TAG, "Manifest: content-length overflow (%d bytes)", content_len);
+        esp_http_client_close(client);
+        esp_http_client_cleanup(client);
+        free(resp_buf);
+        return ESP_FAIL;
+    }
+
+    int read_len = esp_http_client_read(client, resp_buf, MANIFEST_BUF_SIZE - 1);
+    esp_http_client_close(client);
+    esp_http_client_cleanup(client);
+
+    if (read_len <= 0) {
+        ESP_LOGE(TAG, "Manifest: no data received.");
+        free(resp_buf);
+        return ESP_FAIL;
+    }
+    resp_buf[read_len] = '\0';
+    ESP_LOGI(TAG, "Manifest received:\n%s", resp_buf);
+
+    cJSON *root = cJSON_Parse(resp_buf);
+    free(resp_buf);
+    resp_buf = NULL;
+
+    if (!root) {
+        ESP_LOGE(TAG, "Manifest: JSON parse failed.");
+        return ESP_FAIL;
+    }
+
+    cJSON *j_ver = cJSON_GetObjectItemCaseSensitive(root, "version");
+    cJSON *j_sha = cJSON_GetObjectItemCaseSensitive(root, "sha256");
+    cJSON *j_size = cJSON_GetObjectItemCaseSensitive(root, "size");
+    cJSON *j_url = cJSON_GetObjectItemCaseSensitive(root, "url");
+
+    if (!cJSON_IsString(j_ver)  || !j_ver->valuestring  || !cJSON_IsString(j_sha)  || !j_sha->valuestring  || !cJSON_IsNumber(j_size) || !cJSON_IsString(j_url)  || !j_url->valuestring) {
+        ESP_LOGE(TAG, "Manifest: Missing/Incorrect Type Fields.");
+        cJSON_Delete(root);
+        return ESP_FAIL;
+    }
+
+    memset(out, 0, sizeof(ota_manifest_t));
+    strncpy(out->version, j_ver->valuestring, sizeof(out->version) - 1);
+    strncpy(out->sha256,  j_sha->valuestring, sizeof(out->sha256)  - 1);
+    out->size = (uint32_t)j_size->valuedouble;
+    strncpy(out->url,     j_url->valuestring, sizeof(out->url)     - 1);
+
+    cJSON_Delete(root);
+
+    ESP_LOGI(TAG, "Manifest — version: %s, size: %lu, sha256: %.16s", out->version, (unsigned long)out->size, out->sha256);
+    return ESP_OK;
 }
 
-bool token_handshake(void) {
-    //Configure HTTP/TLS Client for Token Handshake
-    esp_http_client_config_t config_cert = {};
-    memset(&config_cert, 0, sizeof(config_cert));
-    config_cert.url = CERT_URL;
-    config_cert.event_handler = http_event_handler;
-    config_cert.keep_alive_enable = true;
-    config_cert.timeout_ms = OTA_HANDSHAKE_TIMEOUT;
-    uint8_t buffer[AUTH_BUFFER_SIZE] = {0};
+//Update
+static bool update_decision(const ota_manifest_t *manifest)
+{
+    char curr_ver[VERSION_STR_LEN] = NVS_VER_DEFAULT;
+    version_get(curr_ver, sizeof(curr_ver));
 
-    //Begin Token Handshake
-    esp_http_client_handle_t client_cert = esp_http_client_init(&config_cert);
-    esp_err_t err = esp_http_client_open(client_cert, 0);
+    ESP_LOGI(TAG, "Version check — server: %s; client: %s", manifest->version, curr_ver);
 
-    //Handshake Process
-    if(err == ESP_OK) {
-        esp_http_client_fetch_headers(client_cert);
-        int len = esp_http_client_read(client_cert, (char*)buffer, AUTH_BUFFER_SIZE);
-        esp_http_client_close(client_cert);
-        esp_http_client_cleanup(client_cert);
-
-        int8_t auth_status = client_authenticate(buffer, auth_token);
-        if (len > 0 && auth_status == 0) {
-            return true;
-        }
-        else if (len <= 0) {
-            ESP_LOGE(TAG, "Auth Failed: No Data Received.");
-            return false;
-        }
-        else if (auth_status == 1) {
-            return false;
-        }
-        else if (auth_status == -1) {
-            return false;
-        }
-        else if (auth_status == -2) {
-            return false;
-        }
-    }
-    else {
-        ESP_LOGE(TAG, "Auth Failed: HTTP Error.");
-        esp_http_client_close(client_cert);
-        esp_http_client_cleanup(client_cert);
+    if (blacklist_check(manifest->version)) {
+        ESP_LOGW(TAG, "Server version %s blacklisted — skipping.", manifest->version);
         return false;
     }
 
-    return false;
-}
-
-void app_download(void) //OTA App Download
-{
-
-    if(token_handshake() == true) {
-
-        //Configure HTTP/TLS Client for OTA engine
-        esp_http_client_config_t config_firm = {};
-        memset(&config_firm, 0, sizeof(config_firm));
-        config_firm.url = OTA_URL;
-        config_firm.event_handler = http_event_handler;
-        config_firm.keep_alive_enable = true;
-        config_firm.timeout_ms = OTA_HANDSHAKE_TIMEOUT;
-        esp_http_client_handle_t client_firm = esp_http_client_init(&config_firm);
-        if (esp_http_client_open(client_firm, 0) != ESP_OK) {
-            ESP_LOGE(TAG, "Failed to open HTTP connection");
-            esp_http_client_cleanup(client_firm);
-            vTaskDelay(pdMS_TO_TICKS(WIFI_RET_DEL));
-            return;
-        }
-        esp_http_client_fetch_headers(client_firm);
-
-        //Fetch Partition for Update
-        const esp_partition_t *update_partition = esp_ota_get_next_update_partition(NULL);
-        ESP_LOGI(TAG, "Update Partition: %s", update_partition->label);
-
-        //Begin OTA Download
-        esp_ota_handle_t ota_handle = 0;
-        esp_err_t ret = esp_ota_begin(update_partition, OTA_SIZE_UNKNOWN, &ota_handle);
-        if (ret != ESP_OK) {
-            ESP_LOGE(TAG, "esp_ota_begin failed: %s", esp_err_to_name(ret));
-            esp_http_client_close(client_firm);
-            esp_http_client_cleanup(client_firm);
-            vTaskDelay(pdMS_TO_TICKS(SYS_POLL_DEL));
-            return;
-        }
-    
-        //OTA Process
-        uint8_t ota_buf[1024];
-        int data_read;
-        bool ota_ok = true;
-        while ((data_read = esp_http_client_read(client_firm, (char *)ota_buf, sizeof(ota_buf))) > 0) {
-            ret = esp_ota_write(ota_handle, ota_buf, data_read);
-            if (ret != ESP_OK) {
-                ESP_LOGE(TAG, "esp_ota_write failed: %s", esp_err_to_name(ret));
-                ota_ok = false;
-                return;
-            }
-        }
-        
-        //End OTA Process
-        if (ota_ok) {
-            ret = esp_ota_end(ota_handle);
-            if (ret == ESP_OK) {
-                ESP_LOGI(TAG, "HTTP OTA finished; Set boot partition.");
-                ESP_ERROR_CHECK(esp_ota_set_boot_partition(update_partition));
-                ESP_LOGI(TAG, "OTA Success, Rebooting.");
-                vTaskDelay(pdMS_TO_TICKS(3000));
-                esp_restart();
-            }
-            else {
-                ESP_LOGE(TAG, "esp_ota_end failed: %s", esp_err_to_name(ret));
-            }
-        }
-        else {
-            esp_ota_end(ota_handle);
-        }
-
-        esp_http_client_close(client_firm);
-        esp_http_client_cleanup(client_firm);
+    int cmp = version_compare(manifest->version, curr_ver);
+    if (cmp > 0) {
+        ESP_LOGI(TAG, "Update: %s -> %s", curr_ver, manifest->version);
+        return true;
+    } else if (cmp == 0) {
+        ESP_LOGI(TAG, "Firmware up to date.");
+        return false;
+    } else {
+        ESP_LOGW(TAG, "Server version < client version. Skip.");
+        return false;
     }
 }
 
-void ota_gatekeep(void) //OTA Implementation
+//Rollback
+void app_rollback(void) {
+    esp_app_desc_t app_info;
+    const esp_partition_t *running = esp_ota_get_running_partition();
+    if (esp_ota_get_partition_description(running, &app_info) == ESP_OK) {
+        blacklist_version_fetch(app_info.version);
+    }
+    
+    esp_ota_mark_app_invalid_rollback_and_reboot();
+}
+
+void app_download(void)
 {
-    //Active Partition
+    ota_manifest_t manifest = {0};
+    if (fetch_manifest(&manifest) != ESP_OK) {
+        ESP_LOGE(TAG, "Manifest Fetch Fail. Abort OTA.");
+        return;
+    }
+
+    if (!update_decision(&manifest)) {
+        return;
+    }
+
+    char firm_url[sizeof(GITHUB_RAW_BASE) + 1 + FIRMWARE_URL_LEN];
+    memset(firm_url, 0, sizeof(firm_url));
+    snprintf(firm_url, sizeof(firm_url), GITHUB_RAW_BASE "/%s", manifest.url);
+    ESP_LOGI(TAG, "Firmware URL: %s", firm_url);
+
+    esp_http_client_config_t cfg = {};
+    memset(&cfg, 0, sizeof(cfg));
+    cfg.url = firm_url;
+    cfg.event_handler = http_event_handler;
+    cfg.keep_alive_enable = true;
+    cfg.timeout_ms = OTA_HANDSHAKE_TIMEOUT;
+    cfg.crt_bundle_attach = esp_crt_bundle_attach;
+
+    esp_http_client_handle_t client = esp_http_client_init(&cfg);
+    if (esp_http_client_open(client, 0) != ESP_OK) {
+        ESP_LOGE(TAG, "Firmware Connection Fail.");
+        esp_http_client_cleanup(client);
+        return;
+    }
+    esp_http_client_fetch_headers(client);
+
+    const esp_partition_t *update_partition = esp_ota_get_next_update_partition(NULL);
+    ESP_LOGI(TAG, "Write partition: %s", update_partition->label);
+
+    esp_ota_handle_t ota_handle = 0;
+    esp_err_t ret = esp_ota_begin(update_partition, OTA_SIZE_UNKNOWN, &ota_handle);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "esp_ota_begin fail: %s", esp_err_to_name(ret));
+        esp_http_client_close(client);
+        esp_http_client_cleanup(client);
+        return;
+    }
+
+    uint8_t *ota_buf = (uint8_t *)malloc(OTA_BUF_SIZE);
+    if (!ota_buf) {
+        ESP_LOGE(TAG, "OTA chunk buffer allocation fail.");
+        esp_ota_end(ota_handle);
+        esp_http_client_close(client);
+        esp_http_client_cleanup(client);
+        return;
+    }
+
+    mbedtls_sha256_context sha_ctx;
+    mbedtls_sha256_init(&sha_ctx);
+    mbedtls_sha256_starts(&sha_ctx, 0);
+
+    int data_read;
+    uint32_t total_bytes = 0;
+    bool ota_ok = true;
+    
+    while ((data_read = esp_http_client_read(client, (char*)ota_buf, OTA_BUF_SIZE)) > 0) {
+        ret = esp_ota_write(ota_handle, ota_buf, data_read);
+        if (ret != ESP_OK) {
+            ESP_LOGE(TAG, "esp_ota_write fail: %s", esp_err_to_name(ret));
+            ota_ok = false;
+            break;
+        }
+        mbedtls_sha256_update(&sha_ctx, ota_buf, data_read);
+        total_bytes += (uint32_t)data_read;
+    }
+
+    free(ota_buf);
+    ota_buf = NULL;
+
+    uint8_t sha_raw[32];
+    mbedtls_sha256_finish(&sha_ctx, sha_raw);
+    mbedtls_sha256_free(&sha_ctx);
+
+    char sha_hex[SHA256_HEX_LEN + 1] = {0};
+    for (int i = 0; i < 32; i++) {
+        snprintf(&sha_hex[i * 2], 3, "%02X", sha_raw[i]);
+    }
+
+    esp_http_client_close(client);
+    esp_http_client_cleanup(client);
+
+    if (ota_ok && total_bytes != manifest.size) {
+        ESP_LOGE(TAG, "Size mismatch — expected: %lu, received: %lu", (unsigned long)manifest.size, (unsigned long)total_bytes);
+        ota_ok = false;
+    }
+
+    if (ota_ok && strncmp(sha_hex, manifest.sha256, SHA256_HEX_LEN) != 0) {
+        ESP_LOGE(TAG, "SHA256 mismatch");
+        ESP_LOGE(TAG, "  expected: %s", manifest.sha256);
+        ESP_LOGE(TAG, "  received: %s", sha_hex);
+        ota_ok = false;
+    }
+
+    if (ota_ok) {
+        ret = esp_ota_end(ota_handle);
+        if (ret == ESP_OK) {
+            ESP_LOGI(TAG, "OTA verified (size=%lu bytes, SHA256=OK).", (unsigned long)total_bytes);
+            ESP_ERROR_CHECK(esp_ota_set_boot_partition(update_partition));
+            ESP_LOGI(TAG, "Boot partition updated. Rebooting.");
+            vTaskDelay(pdMS_TO_TICKS(300));
+            esp_restart();
+        }
+        else {
+            ESP_LOGE(TAG, "esp_ota_end fail: %s", esp_err_to_name(ret));
+        }
+    }
+    else {
+        esp_ota_end(ota_handle);
+        ESP_LOGE(TAG, "OTA verification fail. Firmware not applied.");
+    }
+}
+
+void blacklist_version_fetch(const char *ver)
+{
+    nvs_handle_t h;
+    if (nvs_open(NVS_OTA_NAMESPACE, NVS_READWRITE, &h) == ESP_OK) {
+        nvs_set_str(h, NVS_BAD_VER_KEY, ver);
+        nvs_commit(h);
+        nvs_close(h);
+        ESP_LOGW(TAG, "Blacklisted bad firmware version: %s", ver);
+    }
+}
+
+static bool blacklist_check(const char *ver)
+{
+    char bad[VERSION_STR_LEN] = {0};
+    nvs_handle_t h;
+    if (nvs_open(NVS_OTA_NAMESPACE, NVS_READONLY, &h) != ESP_OK) return false;
+    size_t len = sizeof(bad);
+    esp_err_t err = nvs_get_str(h, NVS_BAD_VER_KEY, bad, &len);
+    nvs_close(h);
+    if (err != ESP_OK) return false;
+    return (strncmp(ver, bad, VERSION_STR_LEN) == 0);
+}
+
+//Rollback Decision
+void ota_gatekeep(void)
+{
     const esp_partition_t *running = esp_ota_get_running_partition();
     esp_ota_img_states_t ota_state;
-    
-    //Rollback Protection
+
+    esp_app_desc_t app_info;
+    bool has_app_desc = (esp_ota_get_partition_description(running, &app_info) == ESP_OK);
+
     if (esp_ota_get_state_partition(running, &ota_state) == ESP_OK) {
         if (ota_state == ESP_OTA_IMG_NEW || ota_state == ESP_OTA_IMG_UNDEFINED) {
-            ESP_LOGI(TAG, "New Firmware.");
-            version_update(VER_INC);
+            ESP_LOGI(TAG, "New firmware — validating.");
+            if (has_app_desc) {
+                version_set(app_info.version);
+                ESP_LOGI(TAG, "NVS version synced: %s", app_info.version);
+            }
             esp_ota_mark_app_valid_cancel_rollback();
         }
         else if (ota_state == ESP_OTA_IMG_VALID) {
-            ESP_LOGI(TAG, "Running validated firmware (state: VALID)");
+            if (has_app_desc) {
+                version_set(app_info.version);
+            }
+            ESP_LOGI(TAG, "Run validated firmware.");
         }
         else if (ota_state == ESP_OTA_IMG_ABORTED) {
-            ESP_LOGW(TAG, "Previous OTA was aborted (state: ABORTED)");
-            int8_t curr_ver = version_data();
-            if (curr_ver > 0) {
-                ESP_LOGE(TAG, "Rolling back to previous version");
-                version_update(VER_DEC);
-                esp_ota_mark_app_invalid_rollback_and_reboot();
-            } else {
-                ESP_LOGW(TAG, "No valid previous version, staying on current firmware");
-                esp_ota_mark_app_valid_cancel_rollback();
-            }
+            ESP_LOGW(TAG, "Previous OTA aborted — initiate rollback.");
+            app_rollback();
         }
         else {
-            ESP_LOGW(TAG, "Unknown OTA image state: %d", ota_state);
+            ESP_LOGW(TAG, "Unknown OTA image state: %d — accept firmware.", ota_state);
             esp_ota_mark_app_valid_cancel_rollback();
         }
     }
-    
-    ESP_LOGI(TAG, "Running partition: %s (type %d, subtype %d, offset 0x%08lx)", running->label, running->type, running->subtype, running->address);
 
-    //Configured Partitions
-    const esp_partition_t *configured = esp_ota_get_boot_partition();
-    const esp_partition_t *next_update = esp_ota_get_next_update_partition(NULL);
-
-    ESP_LOGI(TAG, "Configured boot partition: %s", configured->label);
-    ESP_LOGI(TAG, "Next update partition: %s", next_update->label);
-
-    //App Description
-    esp_app_desc_t running_app_info;
-    if (esp_ota_get_partition_description(running, &running_app_info) == ESP_OK) {
-        ESP_LOGI(TAG, "Running firmware version: %s", running_app_info.version);
-        ESP_LOGI(TAG, "Compile time: %s %s", running_app_info.date, running_app_info.time);
+    ESP_LOGI(TAG, "Running partition: %s (type %d, subtype %d, offset 0x%08lx)", running->label, running->type, running->subtype, (unsigned long)running->address);
+    if (has_app_desc) {
+        ESP_LOGI(TAG, "Firmware version: %s (built %s %s)", app_info.version, app_info.date, app_info.time);
     }
+
+    const esp_partition_t *configured  = esp_ota_get_boot_partition();
+    const esp_partition_t *next_update = esp_ota_get_next_update_partition(NULL);
+    ESP_LOGI(TAG, "Boot partition: %s", configured->label);
+    ESP_LOGI(TAG, "Next update slot: %s", next_update->label);
 }
