@@ -9,6 +9,7 @@ static const char *TAG = "TASK_OPS";
 #define BLINK_INTERVAL 250
 
 void (*feed_dog)(uint8_t) = NULL; //Watchdog Feeder
+TaskHandle_t *wdt_handle; //WDT Handle
 
 //RTOS handles
 SemaphoreHandle_t gpio_mutex;
@@ -54,6 +55,15 @@ void blinker_1(void *pvParameters) {
     uint8_t blink_count = 3;
     
     while(1) {
+        if(ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(10)) > 0) {
+            if(xSemaphoreGetMutexHolder(gpio_mutex) == xTaskGetCurrentTaskHandle()) {
+                xSemaphoreGive(gpio_mutex);
+            }
+            if (wdt_handle != NULL && *wdt_handle != NULL) {
+                xTaskNotifyGive(*wdt_handle);
+                vTaskDelete(NULL);
+            }
+        }
         if (xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(500)) == pdTRUE)
         {
             for(uint8_t i = 0; i < (TASK_INTERVAL / 500); i++)
@@ -62,6 +72,16 @@ void blinker_1(void *pvParameters) {
                     feed_dog(tid);
                 }
                 vTaskDelay(pdMS_TO_TICKS(500));
+
+                if(ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(10)) > 0) {
+                    if(xSemaphoreGetMutexHolder(gpio_mutex) == xTaskGetCurrentTaskHandle()) {
+                        xSemaphoreGive(gpio_mutex);
+                    }
+                    if (wdt_handle != NULL && *wdt_handle != NULL) {
+                        xTaskNotifyGive(*wdt_handle);
+                        vTaskDelete(NULL);
+                    }
+                }
             }
             ESP_LOGI(TAG, "Blinker Task 1 Active.");
             for(uint8_t i = 0; i < blink_count; i++) {
@@ -90,6 +110,15 @@ void blinker_2(void *pvParameters) {
     uint8_t blink_count = 2;
 
     while(1) {
+        if(ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(10)) > 0) {
+            if(xSemaphoreGetMutexHolder(gpio_mutex) == xTaskGetCurrentTaskHandle()) {
+                xSemaphoreGive(gpio_mutex);
+            }
+            if (wdt_handle != NULL && *wdt_handle != NULL) {
+                xTaskNotifyGive(*wdt_handle);
+                vTaskDelete(NULL);
+            }
+        }
         if (xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(500)) == pdTRUE)
         {
             for(uint8_t i = 0; i < (TASK_INTERVAL / 500); i++)
@@ -98,6 +127,16 @@ void blinker_2(void *pvParameters) {
                     feed_dog(tid);
                 }
                 vTaskDelay(pdMS_TO_TICKS(500));
+
+                if(ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(10)) > 0) {
+                    if(xSemaphoreGetMutexHolder(gpio_mutex) == xTaskGetCurrentTaskHandle()) {
+                        xSemaphoreGive(gpio_mutex);
+                    }
+                    if (wdt_handle != NULL && *wdt_handle != NULL) {
+                        xTaskNotifyGive(*wdt_handle);
+                        vTaskDelete(NULL);
+                    }
+                }
             }
             ESP_LOGI(TAG, "Blinker Task 2 Active.");
             for(uint8_t i = 0; i < blink_count; i++) {
