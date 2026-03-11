@@ -1,7 +1,7 @@
-
 #ifndef OTA_OPS_H
 #define OTA_OPS_H
 
+#include <stdio.h>
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -12,43 +12,47 @@
 #include "esp_log.h"
 #include "esp_ota_ops.h"
 #include "esp_http_client.h"
+#include "esp_crt_bundle.h"
 #include "nvs_flash.h"
 #include "esp_netif.h"
+#include "cJSON.h"
+#include "mbedtls/sha256.h"
 
-//Versioning Configuration
-#define NVS_VERSION_KEY "version"
-#define VER_DEC -1
-#define VER_INC 1
+//NVS
+#define NVS_OTA_NAMESPACE "ota"
+#define NVS_VER_KEY "fw_version"
+#define NVS_VER_DEFAULT "0.0.0"
 
-//WiFi Configuration
-#define SSID "JAYANTH"
+//WiFi
+#define SSID "Jayanth"
 #define PASSWORD "Jayrocks"
 
-//OTA Server Configuration
-#define SERVER_IP "172.20.181.94"
-#define SERVER_PORT "8000"
-#define OTA_URL "http://" SERVER_IP ":" SERVER_PORT "/firmware.bin"
+//GitHub
+#define GITHUB_USER "JayanthBalan"
+#define GITHUB_REPO "Fault-Tolerant-Firmware-with-Custom-Watchdog-and-FOTA"
+#define GITHUB_BRANCH "enhancement"
+#define GITHUB_RAW_BASE "https://raw.githubusercontent.com/" GITHUB_USER "/" GITHUB_REPO "/" GITHUB_BRANCH
+#define MANIFEST_URL GITHUB_RAW_BASE "/manifest.json"
+#define NVS_BAD_VER_KEY "bad_version"
 
-//Security Configuration
-#define CERT_URL "http://" SERVER_IP ":" SERVER_PORT "/cert.txt"
-#define AUTH_BUFFER_SIZE 44
-#define VER_INFO_SIZE 6
-#define NVS_VERSION_KEY "version"
-#define VER_DEC -1
-#define VER_INC 1
+//Field Sizes
+#define MANIFEST_BUF_SIZE 512
+#define VERSION_STR_LEN 16
+#define SHA256_HEX_LEN 64
+#define FIRMWARE_URL_LEN 128
+#define OTA_BUF_SIZE 4096
 
-//Macros
+//WiFi Event bits
 #define CONN_PASS BIT0
 #define CONN_FAIL BIT1
 #define MAX_RETRY 5
 
-//Timing configuration
-#define SYS_POLL_DEL 60000
-#define WIFI_RET_DEL 4000
+//Timing
+#define WIFI_RET_DEL 400
 #define OTA_HANDSHAKE_TIMEOUT 30000
 
-//Function Prototypes
+//Public API
 void ota_ops_init(void);
-void version_update(int8_t);
+void app_rollback(void);
 
 #endif
