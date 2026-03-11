@@ -1,183 +1,14 @@
-ho 0 tail 12 room 4
-load:0x40078000,len:15916
-load:0x40080400,len:3860
-  #0  0x40080400 in _invalid_pc_placeholder at C:\Users\jayan\.platformio\packages\framework-espidf\components\xtensa/xtensa_vectors.S:2235
+ *  Executing task: C:\Users\jayan\.platformio\penv\Scripts\platformio.exe device monitor --environment nodemcu-32s 
 
-entry 0x40080630
-I (29) boot: ESP-IDF 5.5.0 2nd stage bootloader
-I (29) boot: compile time Jan 21 2026 00:35:01
-I (29) boot: Multicore bootloader
-I (30) boot: chip revision: v3.1
-I (33) boot.esp32: SPI Speed      : 40MHz
-I (37) boot.esp32: SPI Mode       : DIO
-I (40) boot.esp32: SPI Flash Size : 4MB
-I (44) boot: Enabling RNG early entropy source...
-I (49) boot: Partition Table:
-I (51) boot: ## Label            Usage          Type ST Offset   Length
-I (57) boot:  0 nvs              WiFi data        01 02 00009000 00005000
-I (64) boot:  1 otadata          OTA data         01 00 0000e000 00002000
-I (71) boot:  2 app0             OTA app          00 10 00010000 001e0000
-I (77) boot:  3 app1             OTA app          00 11 001f0000 001e0000
-I (84) boot:  4 spiffs           Unknown data     01 82 003d0000 00003000
-I (90) boot: End of partition table
-I (93) esp_image: segment 0: paddr=001f0020 vaddr=3f400020 size=1f8a0h (129184) map
-I (145) esp_image: segment 1: paddr=0020f8c8 vaddr=3ff80000 size=00020h (    32) load
-I (145) esp_image: segment 2: paddr=0020f8f0 vaddr=3ffb0000 size=00728h (  1832) load
-I (150) esp_image: segment 3: paddr=00210020 vaddr=400d0020 size=a25f8h (665080) map
-I (384) esp_image: segment 4: paddr=002b2620 vaddr=3ffb0728 size=03804h ( 14340) load
-I (389) esp_image: segment 5: paddr=002b5e2c vaddr=40080000 size=17e4ch ( 97868) load
-I (439) boot: Loaded app from partition at offset 0x1f0000
-I (439) boot: Disabling RNG early entropy source...
-I (450) cpu_start: Multicore app
-I (458) cpu_start: Pro cpu start user code
-I (458) cpu_start: cpu freq: 160000000 Hz
-I (458) app_init: Application information:
-I (458) app_init: Project name:     Juggernaut
-I (462) app_init: App version:      1
-I (466) app_init: Compile time:     Jan 21 2026 00:32:36
-I (471) app_init: ELF file SHA256:  03518688d...
-I (475) app_init: ESP-IDF:          5.5.0
-I (479) efuse_init: Min chip rev:     v0.0
-I (483) efuse_init: Max chip rev:     v3.99
-I (487) efuse_init: Chip rev:         v3.1
-I (491) heap_init: Initializing. RAM available for dynamic allocation:
-I (497) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
-I (502) heap_init: At 3FFB8B18 len 000274E8 (157 KiB): DRAM
-I (507) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
-I (513) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
-I (518) heap_init: At 40097E4C len 000081B4 (32 KiB): IRAM
-W (525) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
-I (534) spi_flash: detected chip: generic
-I (537) spi_flash: flash io: dio
-I (541) main_task: Started on CPU0
-I (551) main_task: Calling app_main()
-I (571) OTA_OPS: NVS Initialized.
-I (581) wifi:wifi driver task: 3ffc0bb4, prio:23, stack:6656, core=0
-I (591) wifi:wifi firmware version: f3dbad7
-I (591) wifi:wifi certification version: v7.0
-I (591) wifi:config NVS flash: enabled
-I (591) wifi:config nano formatting: disabled
-I (601) wifi:Init data frame dynamic rx buffer num: 32
-I (601) wifi:Init static rx mgmt buffer num: 5
-I (601) wifi:Init management short buffer num: 32
-I (611) wifi:Init dynamic tx buffer num: 32
-I (611) wifi:Init static rx buffer size: 1600
-I (621) wifi:Init static rx buffer num: 10
-I (621) wifi:Init dynamic rx buffer num: 32
-I (631) wifi_init: rx ba win: 6
-I (631) wifi_init: accept mbox: 6
-I (631) wifi_init: tcpip mbox: 32
-I (631) wifi_init: udp mbox: 6
-I (641) wifi_init: tcp mbox: 6
-I (641) wifi_init: tcp tx win: 5760
-I (641) wifi_init: tcp rx win: 5760
-I (641) wifi_init: tcp mss: 1440
-I (651) wifi_init: WiFi IRAM OP enabled
-I (651) wifi_init: WiFi RX IRAM OP enabled
-I (661) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
-I (741) wifi:mode : sta (88:13:bf:24:3c:24)
-I (751) wifi:enable tsf
-I (751) OTA_OPS: WiFi init finished.
-I (761) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (761) wifi:state: init -> auth (0xb0)
-I (1771) wifi:state: auth -> init (0x200)
-I (1781) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (5781) OTA_OPS: Retry connecting to WiFi...
-I (5781) OTA_OPS: Connection to WiFi failed
-I (12191) OTA_OPS: Retry connecting to WiFi...
-I (12191) OTA_OPS: Connection to WiFi failed
-I (12201) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (12201) wifi:state: init -> auth (0xb0)
-I (12221) wifi:state: auth -> assoc (0x0)
-I (12231) wifi:state: assoc -> run (0x10)
-I (12311) wifi:connected with JAYANTH, aid = 2, channel 11, BW20, bssid = 2e:33:58:8c:88:ef
-I (12311) wifi:security: WPA2-PSK, phy: bgn, rssi: -24
-I (12321) wifi:pm start, type: 1
 
-I (12321) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
-I (12401) wifi:AP's beacon interval = 102400 us, DTIM period = 3
-I (13431) esp_netif_handlers: sta ip: 192.168.137.120, mask: 255.255.255.0, gw: 192.168.137.1
-I (13431) OTA_OPS: Got IP:192.168.137.120
-I (13431) OTA_OPS: Connected to WiFi SSID:JAYANTH
-I (13431) OTA_OPS: New Firmware.
-I (13441) TAG: Client Version: 27
-I (13491) OTA_OPS: Running partition: app1 (type 0, subtype 17, offset 0x001f0000)
-I (13491) OTA_OPS: Configured boot partition: app1
-I (13491) OTA_OPS: Next update partition: app0
-I (13491) OTA_OPS: Running firmware version: 1
-I (13501) OTA_OPS: Compile time: Jan 21 2026 00:32:36
-I (18591) OTA_OPS: Server Firmware Version: 27
-I (18591) OTA_OPS: Client Firmware Version: 28
-I (18591) OTA_OPS: Version mismatch: server=27, client=28
-I (18651) wifi:<ba-add>idx:0 (ifx:0, 2e:33:58:8c:88:ef), tid:0, ssn:9, winSize:64
-I (18991) MAIN: Initialization Complete.
-I (18991) TASK_OPS: Timer started at: 18468768 us
-I (18991) TASK_OPS: Current time: 0 s
-I (23991) TASK_OPS: Blinker Task 1 Active.
-I (28991) TASK_OPS: Current time: 10 s
-I (30491) TASK_OPS: Blinker Task 2 Active.
-I (36491) TASK_OPS: Blinker Task 1 Active.
-I (38991) TASK_OPS: Current time: 20 s
-I (42991) TASK_OPS: Blinker Task 2 Active.
-I (48991) TASK_OPS: Current time: 30 s
-I (48991) TASK_OPS: Blinker Task 1 Active.
-I (55491) TASK_OPS: Blinker Task 2 Active.
-I (58991) TASK_OPS: Current time: 40 s
-I (61491) TASK_OPS: Blinker Task 1 Active.
-I (67991) TASK_OPS: Blinker Task 2 Active.
-                                                                (68991) TASK_OPS: Current time: 50 s
-I (73991) TASK_OPS: Blinker Task 1 Active.
-I (78991) TASK_OPS: Current time: 60 s
-I (80491) TASK_OPS: Blinker Task 2 Active.
-I (86491) TASK_OPS: Blinker Task 1 Active.
-I (88991) TASK_OPS: Current time: 70 s
-I (92991) TASK_OPS: Blinker Task 2 Active.
-I (98991) TASK_OPS: Current time: 80 s
-I (98991) TASK_OPS: Blinker Task 1 Active.
-I (105491) TASK_OPS: Blinker Task 2 Active.
-I (108991) TASK_OPS: Current time: 90 s
-I (111491) TASK_OPS: Blinker Task 1 Active.
-I (117991) TASK_OPS: Blinker Task 2 Active.
-I (118991) TASK_OPS: Current time: 100 s
-I (123991) TASK_OPS: Blinker Task 1 Active.
-I (128991) TASK_OPS: Current time: 110 s
-I (130491) TASK_OPS: Blinker Task 2 Active.
-I (136491) TASK_OPS: Blinker Task 1 Active.
-I (138991) TASK_OPS: Current time: 120 s
-I (142991) TASK_OPS: Blinker Task 2 Active.
-I (148991) TASK_OPS: Current time: 130 s
-I (148991) TASK_OPS: Blinker Task 1 Active.
-                                                                (155491) TASK_OPS: Blinker Task 2 Active.
-I (158991) TASK_OPS: Current time: 140 s
-I (161491) TASK_OPS: Blinker Task 1 Active.
-I (167991) TASK_OPS: Blinker Task 2 Active.
-                                                                (168991) TASK_OPS: Current time: 150 s
-I (173991) TASK_OPS: Blinker Task 1 Active.
-I (178991) TASK_OPS: Current time: 160 s
-I (180491) TASK_OPS: Blinker Task 2 Active.
-I (186491) TASK_OPS: Blinker Task 1 Active.
-I (188991) TASK_OPS: Current time: 170 s
-I (192991) TASK_OPS: Blinker Task 2 Active.
-I (198991) TASK_OPS: Current time: 180 s
-I (198991) TASK_OPS: Blinker Task 1 Active.
-I (205491) TASK_OPS: Blinker Task 2 Active.
-I (208991) TASK_OPS: Current time: 190 s
-I (211491) TASK_OPS: Blinker Task 1 Active.
-I (217991) TASK_OPS: Blinker Task 2 Active.
-I (218991) TASK_OPS: Current time: 200 s
-I (223991) TASK_OPS: Blinker Task 1 Active.
-I (228991) TASK_OPS: Current time: 210 s
-I (230491) TASK_OPS: Blinker Task 2 Active.
-I (236491) TASK_OPS: Blinker Task 1 Active.
-I (238991) TASK_OPS: Current time: 220 s
-I (242991) TASK_OPS: Blinker Task 2 Active.
-I (248991) TASK_OPS: Current time: 230 s
-I (248991) TASK_OPS: Blinker Task 1 Active.
-I (255491) TASK_OPS: Blinker Task 2 Active.
-I (258991) TASK_OPS: Current time: 240 s
-I (261491) TASK_OPS: Blinker Task 1 Active.
-I (267991) TASK_OPS: Blinker Task 2 Active.
-I (268991) TASK_OPS: Current time: 250 s
+Please build project in debug configuration to get more details about an exception.
+See https://docs.platformio.org/page/projectconf/build_configurations.html
+
+
+--- Terminal on COM3 | 115200 8-N-1
+--- Available filters and text transformations: debug, default, direct, esp32_exception_decoder, hexlify, log2file, nocontrol, printable, send_on_enter, time
+--- More details at https://bit.ly/pio-monitor-filters
+--- Quit: Ctrl+C | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
 ets Jul 29 2019 12:21:46
 
 rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
@@ -192,7 +23,7 @@ load:0x40080400,len:3860
 
 entry 0x40080630
 I (29) boot: ESP-IDF 5.5.0 2nd stage bootloader
-I (29) boot: compile time Jan 21 2026 00:35:01
+I (29) boot: compile time Mar  5 2026 16:27:57
 I (29) boot: Multicore bootloader
 I (31) boot: chip revision: v3.1
 I (33) boot.esp32: SPI Speed      : 40MHz
@@ -207,245 +38,122 @@ I (71) boot:  2 app0             OTA app          00 10 00010000 001e0000
 I (77) boot:  3 app1             OTA app          00 11 001f0000 001e0000
 I (84) boot:  4 spiffs           Unknown data     01 82 003d0000 00003000
 I (90) boot: End of partition table
-I (94) esp_image: segment 0: paddr=001f0020 vaddr=3f400020 size=1f8a0h (129184) map
-I (145) esp_image: segment 1: paddr=0020f8c8 vaddr=3ff80000 size=00020h (    32) load
-I (145) esp_image: segment 2: paddr=0020f8f0 vaddr=3ffb0000 size=00728h (  1832) load
-I (150) esp_image: segment 3: paddr=00210020 vaddr=400d0020 size=a25f8h (665080) map
-I (384) esp_image: segment 4: paddr=002b2620 vaddr=3ffb0728 size=03804h ( 14340) load
-I (389) esp_image: segment 5: paddr=002b5e2c vaddr=40080000 size=17e4ch ( 97868) load
-I (439) boot: Loaded app from partition at offset 0x1f0000
-I (439) boot: Disabling RNG early entropy source...
-I (450) cpu_start: Multicore app
-I (458) cpu_start: Pro cpu start user code
-I (458) cpu_start: cpu freq: 160000000 Hz
-I (458) app_init: Application information:
-I (458) app_init: Project name:     Juggernaut
-I (462) app_init: App version:      1
-I (466) app_init: Compile time:     Jan 21 2026 00:32:36
-I (471) app_init: ELF file SHA256:  03518688d...
-I (475) app_init: ESP-IDF:          5.5.0
-I (479) efuse_init: Min chip rev:     v0.0
-I (483) efuse_init: Max chip rev:     v3.99
-I (487) efuse_init: Chip rev:         v3.1
-I (491) heap_init: Initializing. RAM available for dynamic allocation:
-I (497) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
-I (502) heap_init: At 3FFB8B18 len 000274E8 (157 KiB): DRAM
-I (507) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
-I (513) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
-I (518) heap_init: At 40097E4C len 000081B4 (32 KiB): IRAM
-W (525) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
-I (534) spi_flash: detected chip: generic
-I (537) spi_flash: flash io: dio
-I (542) main_task: Started on CPU0
-I (552) main_task: Calling app_main()
-I (572) OTA_OPS: NVS Initialized.
-I (582) wifi:wifi driver task: 3ffc0bb4, prio:23, stack:6656, core=0
-I (592) wifi:wifi firmware version: f3dbad7
-I (592) wifi:wifi certification version: v7.0
-I (592) wifi:config NVS flash: enabled
-I (592) wifi:config nano formatting: disabled
-I (602) wifi:Init data frame dynamic rx buffer num: 32
-I (602) wifi:Init static rx mgmt buffer num: 5
-I (602) wifi:Init management short buffer num: 32
-I (612) wifi:Init dynamic tx buffer num: 32
-I (612) wifi:Init static rx buffer size: 1600
-I (622) wifi:Init static rx buffer num: 10
-I (622) wifi:Init dynamic rx buffer num: 32
-I (632) wifi_init: rx ba win: 6
-I (632) wifi_init: accept mbox: 6
-I (632) wifi_init: tcpip mbox: 32
-I (632) wifi_init: udp mbox: 6
-I (642) wifi_init: tcp mbox: 6
-I (642) wifi_init: tcp tx win: 5760
-I (642) wifi_init: tcp rx win: 5760
-I (642) wifi_init: tcp mss: 1440
-I (652) wifi_init: WiFi IRAM OP enabled
-I (652) wifi_init: WiFi RX IRAM OP enabled
-I (662) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
-I (742) wifi:mode : sta (88:13:bf:24:3c:24)
-I (742) wifi:enable tsf
-I (752) OTA_OPS: WiFi init finished.
-I (822) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (832) wifi:state: init -> auth (0xb0)
-I (842) wifi:state: auth -> assoc (0x0)
-I (852) wifi:state: assoc -> run (0x10)
-I (882) wifi:connected with JAYANTH, aid = 3, channel 11, BW20, bssid = 2e:33:58:8c:88:ef
-I (882) wifi:security: WPA2-PSK, phy: bgn, rssi: -30
-I (892) wifi:pm start, type: 1
-
-I (892) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
-I (922) wifi:AP's beacon interval = 102400 us, DTIM period = 3
-I (1932) esp_netif_handlers: sta ip: 192.168.137.120, mask: 255.255.255.0, gw: 192.168.137.1
-I (1932) OTA_OPS: Got IP:192.168.137.120
-I (1932) OTA_OPS: Connected to WiFi SSID:JAYANTH
-I (1932) OTA_OPS: Running validated firmware (state: VALID)
-I (1942) OTA_OPS: Running partition: app1 (type 0, subtype 17, offset 0x001f0000)
-I (1952) OTA_OPS: Configured boot partition: app1
-I (1952) OTA_OPS: Next update partition: app0
-I (1952) OTA_OPS: Running firmware version: 1
-I (1962) OTA_OPS: Compile time: Jan 21 2026 00:32:36
-I (6992) OTA_OPS: Server Firmware Version: 28
-I (7002) OTA_OPS: Client Firmware Version: 28
-I (7002) OTA_OPS: Auth Success: Token Verified.
-I (7092) OTA_OPS: Update Partition: app0
-I (7612) wifi:[ADDBA]RX DELBA, reason:37, delete tid:0, initiator:1(originator)
-I (7612) wifi:<ba-del>idx:0, tid:0
-I (9832) wifi:<ba-add>idx:0 (ifx:0, 2e:33:58:8c:88:ef), tid:0, ssn:23, winSize:64
-I (20472) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1f8a0h (129184) map
-I (20522) esp_image: segment 1: paddr=0002f8c8 vaddr=3ff80000 size=00020h (    32) 
-I (20522) esp_image: segment 2: paddr=0002f8f0 vaddr=3ffb0000 size=00728h (  1832) 
-I (20522) esp_image: segment 3: paddr=00030020 vaddr=400d0020 size=a25ech (665068) map
-I (20762) esp_image: segment 4: paddr=000d2614 vaddr=3ffb0728 size=03804h ( 14340) 
-I (20762) esp_image: segment 5: paddr=000d5e20 vaddr=40080000 size=17e4ch ( 97868)
-I (20792) OTA_OPS: HTTP OTA finished; Set boot partition.
-I (20802) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1f8a0h (129184) map
-I (20842) esp_image: segment 1: paddr=0002f8c8 vaddr=3ff80000 size=00020h (    32) 
-I (20842) esp_image: segment 2: paddr=0002f8f0 vaddr=3ffb0000 size=00728h (  1832) 
-I (20842) esp_image: segment 3: paddr=00030020 vaddr=400d0020 size=a25ech (665068) map
-I (21062) esp_image: segment 4: paddr=000d2614 vaddr=3ffb0728 size=03804h ( 14340) 
-I (21072) esp_image: segment 5: paddr=000d5e20 vaddr=40080000 size=17e4ch ( 97868)
-I (21162) OTA_OPS: OTA Success, Rebooting.
-I (24162) wifi:state: run -> init (0x0)
-I (24172) wifi:pm stop, total sleep time: 9839897 us / 23277695 us
-
-I (24172) wifi:<ba-del>idx:0, tid:0
-I (24172) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (24212) wifi:flush txq
-I (24212) wifi:stop sw txq
-I (24212) wifi:lmac stop hw txq
-ets Jul 29 2019 12:21:46
-
-rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
-configsip: 0, SPIWP:0xee
-clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
-mode:DIO, clock div:2
-load:0x3fff0030,len:6380
-ho 0 tail 12 room 4
-load:0x40078000,len:15916
-load:0x40080400,len:3860
-  #0  0x40080400 in _invalid_pc_placeholder at C:\Users\jayan\.platformio\packages\framework-espidf\components\xtensa/xtensa_vectors.S:2235
-
-entry 0x40080630
-I (29) boot: ESP-IDF 5.5.0 2nd stage bootloader
-I (29) boot: compile time Jan 21 2026 00:35:01
-I (29) boot: Multicore bootloader
-I (30) boot: chip revision: v3.1
-I (33) boot.esp32: SPI Speed      : 40MHz
-I (37) boot.esp32: SPI Mode       : DIO
-I (40) boot.esp32: SPI Flash Size : 4MB
-I (44) boot: Enabling RNG early entropy source...
-I (49) boot: Partition Table:
-I (51) boot: ## Label            Usage          Type ST Offset   Length
-I (57) boot:  0 nvs              WiFi data        01 02 00009000 00005000
-I (64) boot:  1 otadata          OTA data         01 00 0000e000 00002000
-I (71) boot:  2 app0             OTA app          00 10 00010000 001e0000
-I (77) boot:  3 app1             OTA app          00 11 001f0000 001e0000
-I (84) boot:  4 spiffs           Unknown data     01 82 003d0000 00003000
-I (90) boot: End of partition table
-I (93) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1f8a0h (129184) map
-I (145) esp_image: segment 1: paddr=0002f8c8 vaddr=3ff80000 size=00020h (    32) load
-I (145) esp_image: segment 2: paddr=0002f8f0 vaddr=3ffb0000 size=00728h (  1832) load
-I (150) esp_image: segment 3: paddr=00030020 vaddr=400d0020 size=a25ech (665068) map
-I (384) esp_image: segment 4: paddr=000d2614 vaddr=3ffb0728 size=03804h ( 14340) load
-I (389) esp_image: segment 5: paddr=000d5e20 vaddr=40080000 size=17e4ch ( 97868) load
-I (439) boot: Loaded app from partition at offset 0x10000
-I (439) boot: Disabling RNG early entropy source...
-I (450) cpu_start: Multicore app
-I (458) cpu_start: Pro cpu start user code
-I (458) cpu_start: cpu freq: 160000000 Hz
-I (458) app_init: Application information:
-I (458) app_init: Project name:     Juggernaut
-I (462) app_init: App version:      1
-I (466) app_init: Compile time:     Jan 21 2026 00:32:36
-I (471) app_init: ELF file SHA256:  3f0c9280b...
-I (475) app_init: ESP-IDF:          5.5.0
-I (479) efuse_init: Min chip rev:     v0.0
-I (483) efuse_init: Max chip rev:     v3.99
-I (487) efuse_init: Chip rev:         v3.1
-I (491) heap_init: Initializing. RAM available for dynamic allocation:
-I (497) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
-I (502) heap_init: At 3FFB8B18 len 000274E8 (157 KiB): DRAM
-I (507) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
-I (512) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
-I (518) heap_init: At 40097E4C len 000081B4 (32 KiB): IRAM
-W (525) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
-I (534) spi_flash: detected chip: generic
-I (537) spi_flash: flash io: dio
-I (541) main_task: Started on CPU0
-I (551) main_task: Calling app_main()
-I (571) OTA_OPS: NVS Initialized.
-I (581) wifi:wifi driver task: 3ffc0bb4, prio:23, stack:6656, core=0
-I (591) wifi:wifi firmware version: f3dbad7
-I (591) wifi:wifi certification version: v7.0
-I (591) wifi:config NVS flash: enabled
-I (591) wifi:config nano formatting: disabled
-I (591) wifi:Init data frame dynamic rx buffer num: 32
-I (601) wifi:Init static rx mgmt buffer num: 5
-I (601) wifi:Init management short buffer num: 32
-I (611) wifi:Init dynamic tx buffer num: 32
-I (611) wifi:Init static rx buffer size: 1600
-I (621) wifi:Init static rx buffer num: 10
-I (621) wifi:Init dynamic rx buffer num: 32
-I (631) wifi_init: rx ba win: 6
-I (631) wifi_init: accept mbox: 6
-I (631) wifi_init: tcpip mbox: 32
-I (631) wifi_init: udp mbox: 6
-I (641) wifi_init: tcp mbox: 6
-I (641) wifi_init: tcp tx win: 5760
-I (641) wifi_init: tcp rx win: 5760
-I (641) wifi_init: tcp mss: 1440
-I (651) wifi_init: WiFi IRAM OP enabled
-I (651) wifi_init: WiFi RX IRAM OP enabled
-I (661) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
-I (741) wifi:mode : sta (88:13:bf:24:3c:24)
-I (741) wifi:enable tsf
-I (751) OTA_OPS: WiFi init finished.
-I (791) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
+I (94) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=31280h (201344) map
+I (170) esp_image: segment 1: paddr=000412a8 vaddr=3ff80000 size=00020h (    32) load
+I (170) esp_image: segment 2: paddr=000412d0 vaddr=3ffb0000 size=03f2ch ( 16172) load
+I (180) esp_image: segment 3: paddr=00045204 vaddr=40080000 size=0ae14h ( 44564) load
+I (199) esp_image: segment 4: paddr=00050020 vaddr=400d0020 size=a9914h (694548) map
+I (436) esp_image: segment 5: paddr=000f993c vaddr=4008ae14 size=0d070h ( 53360) load
+I (469) boot: Loaded app from partition at offset 0x10000
+I (469) boot: Disabling RNG early entropy source...
+I (479) cpu_start: Multicore app
+I (488) cpu_start: Pro cpu start user code
+I (488) cpu_start: cpu freq: 160000000 Hz
+I (488) app_init: Application information:
+I (488) app_init: Project name:     Juggernaut
+I (492) app_init: App version:      1.0.3
+I (496) app_init: Compile time:     Mar  8 2026 19:00:07
+I (501) app_init: ELF file SHA256:  f02a81e64...
+I (505) app_init: ESP-IDF:          5.5.0
+I (509) efuse_init: Min chip rev:     v0.0
+I (513) efuse_init: Max chip rev:     v3.99
+I (517) efuse_init: Chip rev:         v3.1
+I (521) heap_init: Initializing. RAM available for dynamic allocation:
+I (527) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (532) heap_init: At 3FFB8C28 len 000273D8 (156 KiB): DRAM
+I (537) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (542) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (548) heap_init: At 40097E84 len 0000817C (32 KiB): IRAM
+W (555) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
+I (564) spi_flash: detected chip: generic
+I (567) spi_flash: flash io: dio
+I (571) main_task: Started on CPU0
+I (581) main_task: Calling app_main()
+I (601) OTA_OPS: NVS initialized.
+I (611) wifi:wifi driver task: 3ffc0c40, prio:23, stack:6656, core=0
+I (621) wifi:wifi firmware version: f3dbad7
+I (621) wifi:wifi certification version: v7.0
+I (621) wifi:config NVS flash: enabled
+I (621) wifi:config nano formatting: disabled
+I (631) wifi:Init data frame dynamic rx buffer num: 32
+I (631) wifi:Init static rx mgmt buffer num: 5
+I (631) wifi:Init management short buffer num: 32
+I (641) wifi:Init dynamic tx buffer num: 32
+I (641) wifi:Init static rx buffer size: 1600
+I (651) wifi:Init static rx buffer num: 10
+I (651) wifi:Init dynamic rx buffer num: 32
+I (661) wifi_init: rx ba win: 6
+I (661) wifi_init: accept mbox: 6
+I (661) wifi_init: tcpip mbox: 32
+I (661) wifi_init: udp mbox: 6
+I (671) wifi_init: tcp mbox: 6
+I (671) wifi_init: tcp tx win: 5760
+I (671) wifi_init: tcp rx win: 5760
+I (681) wifi_init: tcp mss: 1440
+I (681) wifi_init: WiFi IRAM OP enabled
+I (681) wifi_init: WiFi RX IRAM OP enabled
+I (691) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
+I (781) wifi:mode : sta (88:13:bf:24:3c:24)
+I (781) wifi:enable tsf
+I (781) OTA_OPS: WiFi init done.
+I (791) wifi:new:<6,0>, old:<1,0>, ap:<255,255>, sta:<6,0>, prof:1, snd_ch_cfg:0x0
 I (801) wifi:state: init -> auth (0xb0)
-I (1811) wifi:state: auth -> init (0x200)
-I (1821) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (5821) OTA_OPS: Retry connecting to WiFi...
-I (5821) OTA_OPS: Connection to WiFi failed
-I (12231) OTA_OPS: Retry connecting to WiFi...
-I (12231) OTA_OPS: Connection to WiFi failed
-I (12241) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (12241) wifi:state: init -> auth (0xb0)
-I (12251) wifi:state: auth -> assoc (0x0)
-I (12261) wifi:state: assoc -> run (0x10)
-I (12291) wifi:connected with JAYANTH, aid = 4, channel 11, BW20, bssid = 2e:33:58:8c:88:ef
-I (12291) wifi:security: WPA2-PSK, phy: bgn, rssi: -29
-I (12301) wifi:pm start, type: 1
+I (1961) wifi:state: auth -> assoc (0x0)
+I (1971) wifi:state: assoc -> run (0x10)
+I (1991) wifi:connected with Jayanth, aid = 1, channel 6, BW20, bssid = f2:85:0c:51:e6:4a
+I (1991) wifi:security: WPA3-SAE, phy: bgn, rssi: -30
+I (2001) wifi:pm start, type: 1
 
-I (12301) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
-I (12341) wifi:AP's beacon interval = 102400 us, DTIM period = 3
-I (13341) esp_netif_handlers: sta ip: 192.168.137.120, mask: 255.255.255.0, gw: 192.168.137.1
-I (13341) OTA_OPS: Got IP:192.168.137.120
-I (13341) OTA_OPS: Connected to WiFi SSID:JAYANTH
-I (13341) OTA_OPS: New Firmware.
-I (13351) TAG: Client Version: 28
-I (13411) OTA_OPS: Running partition: app0 (type 0, subtype 16, offset 0x00010000)
-I (13411) OTA_OPS: Configured boot partition: app0
-I (13411) OTA_OPS: Next update partition: app1
-I (13411) OTA_OPS: Running firmware version: 1
-I (13421) OTA_OPS: Compile time: Jan 21 2026 00:32:36
-I (18621) OTA_OPS: Server Firmware Version: 28
-I (18621) OTA_OPS: Client Firmware Version: 29
-I (18621) OTA_OPS: Version mismatch: server=28, client=29
-I (18791) wifi:<ba-add>idx:0 (ifx:0, 2e:33:58:8c:88:ef), tid:0, ssn:10, winSize:64
-I (19021) MAIN: Initialization Complete.
-I (19021) TASK_OPS: Timer started at: 18498637 us
-I (19021) TASK_OPS: Current time: 0 s
-E (20021) WDT_OPS: Unresponsive Task: Name = countdown_task, ID = 0 || Threshold = 500, Elapsed Time = 1000
-E (20021) WDT_OPS: Critical Task Fail: Rollback
-I (20371) esp_ota_ops: Rollback to previously worked partition.
-I (20371) wifi:state: run -> init (0x0)
-I (20371) wifi:pm stop, total sleep time: 7034449 us / 8073153 us
+I (2001) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (2011) wifi:<ba-add>idx:0 (ifx:0, f2:85:0c:51:e6:4a), tid:0, ssn:0, winSize:64
+I (2031) wifi:dp: 2, bi: 102400, li: 4, scale listen interval from 307200 us to 409600 us
+I (2031) wifi:AP's beacon interval = 102400 us, DTIM period = 2
+I (3041) esp_netif_handlers: sta ip: 10.135.112.222, mask: 255.255.255.0, gw: 10.135.112.25
+I (3041) OTA_OPS: Got IP: 10.135.112.222
+I (3041) OTA_OPS: Connected to SSID: Jayanth
+I (3041) OTA_OPS: Running validated firmware.
+I (3051) OTA_OPS: Running partition : app0  (type 0, subtype 16, offset 0x00010000)
+I (3051) OTA_OPS: Firmware version  : 1.0.3  (built Mar  8 2026 19:00:07)
+I (3061) OTA_OPS: Boot partition    : app0
+I (3061) OTA_OPS: Next update slot  : app1
+I (4121) esp-x509-crt-bundle: Certificate validated
+I (5231) OTA_OPS: Manifest received:
 
-I (20371) wifi:<ba-del>idx:0, tid:0
-I (20371) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (20411) wifi:flush txq
-I (20411) wifi:stop sw txq
-I (20411) wifi:lmac stop hw txq
+{
+  "version": "1.1.4",
+  "sha256": "8661FAAEB448FB430A8D3ED9ABEED5760AE2D4776BCBF3917ACF1AC7FB624266",
+  "size": 1010032,
+  "url": "firmware.bin"
+}
+
+I (5231) OTA_OPS: Manifest — version: 1.1.4  size: 1010032  sha256: 8661FAAEB448FB43...
+I (5241) OTA_OPS: Version check — server: 1.1.4  |  client: 1.0.3
+I (5251) OTA_OPS: Update available: 1.0.3 -> 1.1.4
+I (5251) OTA_OPS: Firmware URL: https://raw.githubusercontent.com/JayanthBalan/Fault-Tolerant-Firmware-with-Custom-Watchdog-and-FOTA/enhancement/firmware.bin
+I (5731) esp-x509-crt-bundle: Certificate validated
+I (7681) OTA_OPS: Writing to partition: app1
+I (36041) esp_image: segment 0: paddr=001f0020 vaddr=3f400020 size=31220h (201248) map
+I (36111) esp_image: segment 1: paddr=00221248 vaddr=3ff80000 size=00020h (    32) 
+I (36111) esp_image: segment 2: paddr=00221270 vaddr=3ffb0000 size=03f2ch ( 16172)
+I (36121) esp_image: segment 3: paddr=002251a4 vaddr=40080000 size=0ae74h ( 44660) 
+I (36141) esp_image: segment 4: paddr=00230020 vaddr=400d0020 size=a9914h (694548) map
+I (36361) esp_image: segment 5: paddr=002d993c vaddr=4008ae74 size=0d010h ( 53264) 
+I (36381) OTA_OPS: OTA verified (size=1010032 bytes, SHA256=OK).
+I (36381) esp_image: segment 0: paddr=001f0020 vaddr=3f400020 size=31220h (201248) map
+I (36441) esp_image: segment 1: paddr=00221248 vaddr=3ff80000 size=00020h (    32) 
+I (36451) esp_image: segment 2: paddr=00221270 vaddr=3ffb0000 size=03f2ch ( 16172) 
+I (36451) esp_image: segment 3: paddr=002251a4 vaddr=40080000 size=0ae74h ( 44660)
+I (36471) esp_image: segment 4: paddr=00230020 vaddr=400d0020 size=a9914h (694548) map
+I (36691) esp_image: segment 5: paddr=002d993c vaddr=4008ae74 size=0d010h ( 53264) 
+I (36771) OTA_OPS: Boot partition updated. Rebooting.
+I (37071) wifi:state: run -> init (0x0)
+I (37081) wifi:pm stop, total sleep time: 14782388 us / 35079189 us
+
+I (37081) wifi:<ba-del>idx:0, tid:0
+I (37081) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1, snd_ch_cfg:0x0
+I (37141) wifi:flush txq
+I (37141) wifi:stop sw txq
+I (37141) wifi:lmac stop hw txq
 ets Jul 29 2019 12:21:46
 
 rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
@@ -460,7 +168,7 @@ load:0x40080400,len:3860
 
 entry 0x40080630
 I (29) boot: ESP-IDF 5.5.0 2nd stage bootloader
-I (29) boot: compile time Jan 21 2026 00:35:01
+I (29) boot: compile time Mar  5 2026 16:27:57
 I (29) boot: Multicore bootloader
 I (30) boot: chip revision: v3.1
 I (33) boot.esp32: SPI Speed      : 40MHz
@@ -475,259 +183,119 @@ I (71) boot:  2 app0             OTA app          00 10 00010000 001e0000
 I (77) boot:  3 app1             OTA app          00 11 001f0000 001e0000
 I (84) boot:  4 spiffs           Unknown data     01 82 003d0000 00003000
 I (90) boot: End of partition table
-I (93) esp_image: segment 0: paddr=001f0020 vaddr=3f400020 size=1f8a0h (129184) map
-I (145) esp_image: segment 1: paddr=0020f8c8 vaddr=3ff80000 size=00020h (    32) load
-I (145) esp_image: segment 2: paddr=0020f8f0 vaddr=3ffb0000 size=00728h (  1832) load
-I (150) esp_image: segment 3: paddr=00210020 vaddr=400d0020 size=a25f8h (665080) map
-I (384) esp_image: segment 4: paddr=002b2620 vaddr=3ffb0728 size=03804h ( 14340) load
-I (389) esp_image: segment 5: paddr=002b5e2c vaddr=40080000 size=17e4ch ( 97868) load
-I (439) boot: Loaded app from partition at offset 0x1f0000
-I (439) boot: Disabling RNG early entropy source...
-I (450) cpu_start: Multicore app
-I (458) cpu_start: Pro cpu start user code
-I (458) cpu_start: cpu freq: 160000000 Hz
-I (458) app_init: Application information:
-I (458) app_init: Project name:     Juggernaut
-I (462) app_init: App version:      1
-I (466) app_init: Compile time:     Jan 21 2026 00:32:36
-I (471) app_init: ELF file SHA256:  03518688d...
-I (475) app_init: ESP-IDF:          5.5.0
-I (479) efuse_init: Min chip rev:     v0.0
-I (483) efuse_init: Max chip rev:     v3.99
-I (487) efuse_init: Chip rev:         v3.1
-I (491) heap_init: Initializing. RAM available for dynamic allocation:
-I (497) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
-I (502) heap_init: At 3FFB8B18 len 000274E8 (157 KiB): DRAM
-I (507) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
-I (512) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
-I (518) heap_init: At 40097E4C len 000081B4 (32 KiB): IRAM
-W (525) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
-I (534) spi_flash: detected chip: generic
-I (537) spi_flash: flash io: dio
-I (541) main_task: Started on CPU0
-I (551) main_task: Calling app_main()
-I (571) OTA_OPS: NVS Initialized.
-I (581) wifi:wifi driver task: 3ffc0bb4, prio:23, stack:6656, core=0
-I (591) wifi:wifi firmware version: f3dbad7
-I (591) wifi:wifi certification version: v7.0
-I (591) wifi:config NVS flash: enabled
-I (591) wifi:config nano formatting: disabled
-I (601) wifi:Init data frame dynamic rx buffer num: 32
-I (601) wifi:Init static rx mgmt buffer num: 5
-I (601) wifi:Init management short buffer num: 32
-I (611) wifi:Init dynamic tx buffer num: 32
-I (611) wifi:Init static rx buffer size: 1600
-I (621) wifi:Init static rx buffer num: 10
-I (621) wifi:Init dynamic rx buffer num: 32
-I (631) wifi_init: rx ba win: 6
-I (631) wifi_init: accept mbox: 6
-I (631) wifi_init: tcpip mbox: 32
-I (631) wifi_init: udp mbox: 6
-I (641) wifi_init: tcp mbox: 6
-I (641) wifi_init: tcp tx win: 5760
-I (641) wifi_init: tcp rx win: 5760
-I (641) wifi_init: tcp mss: 1440
-I (651) wifi_init: WiFi IRAM OP enabled
-I (651) wifi_init: WiFi RX IRAM OP enabled
-I (661) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
-I (741) wifi:mode : sta (88:13:bf:24:3c:24)
-I (741) wifi:enable tsf
-I (751) OTA_OPS: WiFi init finished.
-I (831) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (831) wifi:state: init -> auth (0xb0)
-I (841) wifi:state: auth -> assoc (0x0)
-I (851) wifi:state: assoc -> run (0x10)
-I (881) wifi:connected with JAYANTH, aid = 5, channel 11, BW20, bssid = 2e:33:58:8c:88:ef
-I (881) wifi:security: WPA2-PSK, phy: bgn, rssi: -26
-I (891) wifi:pm start, type: 1
+I (93) esp_image: segment 0: paddr=001f0020 vaddr=3f400020 size=31220h (201248) map
+I (170) esp_image: segment 1: paddr=00221248 vaddr=3ff80000 size=00020h (    32) load
+I (170) esp_image: segment 2: paddr=00221270 vaddr=3ffb0000 size=03f2ch ( 16172) load
+I (180) esp_image: segment 3: paddr=002251a4 vaddr=40080000 size=0ae74h ( 44660) load
+I (198) esp_image: segment 4: paddr=00230020 vaddr=400d0020 size=a9914h (694548) map
+I (436) esp_image: segment 5: paddr=002d993c vaddr=4008ae74 size=0d010h ( 53264) load
+I (469) boot: Loaded app from partition at offset 0x1f0000
+I (469) boot: Disabling RNG early entropy source...
+I (479) cpu_start: Multicore app
+I (488) cpu_start: Pro cpu start user code
+I (488) cpu_start: cpu freq: 160000000 Hz
+I (488) app_init: Application information:
+I (488) app_init: Project name:     Juggernaut
+I (492) app_init: App version:      1.1.4
+I (496) app_init: Compile time:     Mar 10 2026 23:09:20
+I (501) app_init: ELF file SHA256:  c3ccd013e...
+I (505) app_init: ESP-IDF:          5.5.0
+I (509) efuse_init: Min chip rev:     v0.0
+I (513) efuse_init: Max chip rev:     v3.99 
+I (517) efuse_init: Chip rev:         v3.1
+I (521) heap_init: Initializing. RAM available for dynamic allocation:
+I (527) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (532) heap_init: At 3FFB8C28 len 000273D8 (156 KiB): DRAM
+I (537) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (542) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (548) heap_init: At 40097E84 len 0000817C (32 KiB): IRAM
+W (555) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
+I (564) spi_flash: detected chip: generic
+I (567) spi_flash: flash io: dio
+I (571) main_task: Started on CPU0
+I (581) main_task: Calling app_main()
+I (601) OTA_OPS: NVS initialized.
+I (611) wifi:wifi driver task: 3ffc0c40, prio:23, stack:6656, core=0
+I (621) wifi:wifi firmware version: f3dbad7
+I (621) wifi:wifi certification version: v7.0
+I (621) wifi:config NVS flash: enabled
+I (621) wifi:config nano formatting: disabled
+I (631) wifi:Init data frame dynamic rx buffer num: 32
+I (631) wifi:Init static rx mgmt buffer num: 5
+I (631) wifi:Init management short buffer num: 32
+I (641) wifi:Init dynamic tx buffer num: 32
+I (641) wifi:Init static rx buffer size: 1600
+I (651) wifi:Init static rx buffer num: 10
+I (651) wifi:Init dynamic rx buffer num: 32
+I (661) wifi_init: rx ba win: 6
+I (661) wifi_init: accept mbox: 6
+I (661) wifi_init: tcpip mbox: 32
+I (661) wifi_init: udp mbox: 6
+I (671) wifi_init: tcp mbox: 6
+I (671) wifi_init: tcp tx win: 5760
+I (671) wifi_init: tcp rx win: 5760
+I (681) wifi_init: tcp mss: 1440
+I (681) wifi_init: WiFi IRAM OP enabled
+I (681) wifi_init: WiFi RX IRAM OP enabled
+I (691) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
+I (771) wifi:mode : sta (88:13:bf:24:3c:24)
+I (781) wifi:enable tsf
+I (781) OTA_OPS: WiFi init Successful.
+I (791) wifi:new:<6,0>, old:<1,0>, ap:<255,255>, sta:<6,0>, prof:1, snd_ch_cfg:0x0
+I (791) wifi:state: init -> auth (0xb0)
+I (1981) wifi:state: auth -> assoc (0x0)
+I (1991) wifi:state: assoc -> run (0x10)
+I (2011) wifi:connected with Jayanth, aid = 1, channel 6, BW20, bssid = f2:85:0c:51:e6:4a
+I (2021) wifi:security: WPA3-SAE, phy: bgn, rssi: -30
+I (2021) wifi:pm start, type: 1
 
-I (891) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
-I (931) wifi:AP's beacon interval = 102400 us, DTIM period = 3
-I (2141) esp_netif_handlers: sta ip: 192.168.137.120, mask: 255.255.255.0, gw: 192.168.137.1
-I (2141) OTA_OPS: Got IP:192.168.137.120
-I (2141) OTA_OPS: Connected to WiFi SSID:JAYANTH
-I (2141) OTA_OPS: Running validated firmware (state: VALID)
-I (2151) OTA_OPS: Running partition: app1 (type 0, subtype 17, offset 0x001f0000)
-I (2161) OTA_OPS: Configured boot partition: app1
-I (2161) OTA_OPS: Next update partition: app0
-I (2161) OTA_OPS: Running firmware version: 1
-I (2171) OTA_OPS: Compile time: Jan 21 2026 00:32:36
-                                                                7201) OTA_OPS: Server Firmware Version: 28
-I (7201) OTA_OPS: Client Firmware Version: 29
-I (7201) OTA_OPS: Version mismatch: server=28, client=29
-I (7601) MAIN: Initialization Complete.
-I (7601) TASK_OPS: Timer started at: 7078751 us
-I (7601) TASK_OPS: Current time: 0 s
-I (7891) wifi:<ba-add>idx:0 (ifx:0, 2e:33:58:8c:88:ef), tid:0, ssn:10, winSize:64
-I (12601) TASK_OPS: Blinker Task 1 Active.
-I (17601) TASK_OPS: Current time: 10 s
-I (19101) TASK_OPS: Blinker Task 2 Active.
-I (25101) TASK_OPS: Blinker Task 1 Active.
-I (27601) TASK_OPS: Current time: 20 s
-I (31601) TASK_OPS: Blinker Task 2 Active.
-I (37601) TASK_OPS: Current time: 30 s
-I (37601) TASK_OPS: Blinker Task 1 Active.
-I (44101) TASK_OPS: Blinker Task 2 Active.
-I (47601) TASK_OPS: Current time: 40 s
-I (50101) TASK_OPS: Blinker Task 1 Active.
-I (56601) TASK_OPS: Blinker Task 2 Active.
-I (57601) TASK_OPS: Current time: 50 s
-I (62601) TASK_OPS: Blinker Task 1 Active.
-I (67601) TASK_OPS: Current time: 60 s
-I (69101) TASK_OPS: Blinker Task 2 Active.
-I (75101) TASK_OPS: Blinker Task 1 Active.
-I (77601) TASK_OPS: Current time: 70 s
-I (81601) TASK_OPS: Blinker Task 2 Active.
-I (87601) TASK_OPS: Current time: 80 s
-I (87601) TASK_OPS: Blinker Task 1 Active.
-I (94101) TASK_OPS: Blinker Task 2 Active.
-I (97601) TASK_OPS: Current time: 90 s
-I (100101) TASK_OPS: Blinker Task 1 Active.
-I (106601) TASK_OPS: Blinker Task 2 Active.
-I (107601) TASK_OPS: Current time: 100 s
-I (112601) TASK_OPS: Blinker Task 1 Active.
-I (117601) TASK_OPS: Current time: 110 s
-I (119101) TASK_OPS: Blinker Task 2 Active.
-I (125101) TASK_OPS: Blinker Task 1 Active.
-I (127601) TASK_OPS: Current time: 120 s
-I (131601) TASK_OPS: Blinker Task 2 Active.
-I (137601) TASK_OPS: Current time: 130 s
-I (137601) TASK_OPS: Blinker Task 1 Active.
-I (144101) TASK_OPS: Blinker Task 2 Active.
-I (147601) TASK_OPS: Current time: 140 s
-ets Jul 29 2019 12:21:46
+I (2021) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (2031) wifi:<ba-add>idx:0 (ifx:0, f2:85:0c:51:e6:4a), tid:0, ssn:0, winSize:64
+I (2051) wifi:dp: 2, bi: 102400, li: 4, scale listen interval from 307200 us to 409600 us
+I (2051) wifi:AP's beacon interval = 102400 us, DTIM period = 2
+I (3061) esp_netif_handlers: sta ip: 10.135.112.222, mask: 255.255.255.0, gw: 10.135.112.25
+I (3061) OTA_OPS: Got IP: 10.135.112.222
+I (3061) OTA_OPS: Connected to SSID: Jayanth
+I (3061) OTA_OPS: New firmware — validating.
+I (3081) OTA_OPS: NVS version synced: 1.1.4
+I (3131) OTA_OPS: Running partition: app1 (type 0, subtype 17, offset 0x001f0000)
+I (3131) OTA_OPS: Firmware version: 1.1.4 (built Mar 10 2026 23:09:20)
+I (3131) OTA_OPS: Boot partition: app1
+I (3131) OTA_OPS: Next update slot: app0
+I (4031) esp-x509-crt-bundle: Certificate validated
+I (4661) OTA_OPS: Manifest received:
 
-rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
-configsip: 0, SPIWP:0xee
-clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
-mode:DIO, clock div:2
-load:0x3fff0030,len:6380
-ho 0 tail 12 room 4
-load:0x40078000,len:15916
-load:0x40080400,len:3860
-  #0  0x40080400 in _invalid_pc_placeholder at C:\Users\jayan\.platformio\packages\framework-espidf\components\xtensa/xtensa_vectors.S:2235
+{
+  "version": "1.1.4",
+  "sha256": "8661FAAEB448FB430A8D3ED9ABEED5760AE2D4776BCBF3917ACF1AC7FB624266",
+  "size": 1010032,
+  "url": "firmware.bin"
+}
 
-entry 0x40080630
-I (29) boot: ESP-IDF 5.5.0 2nd stage bootloader
-I (29) boot: compile time Jan 21 2026 00:35:01
-I (29) boot: Multicore bootloader
-I (31) boot: chip revision: v3.1
-I (33) boot.esp32: SPI Speed      : 40MHz
-I (37) boot.esp32: SPI Mode       : DIO
-I (41) boot.esp32: SPI Flash Size : 4MB
-I (44) boot: Enabling RNG early entropy source...
-I (49) boot: Partition Table:
-I (51) boot: ## Label            Usage          Type ST Offset   Length
-I (58) boot:  0 nvs              WiFi data        01 02 00009000 00005000
-I (64) boot:  1 otadata          OTA data         01 00 0000e000 00002000
-I (71) boot:  2 app0             OTA app          00 10 00010000 001e0000
-I (77) boot:  3 app1             OTA app          00 11 001f0000 001e0000
-I (84) boot:  4 spiffs           Unknown data     01 82 003d0000 00003000
-I (90) boot: End of partition table
-I (94) esp_image: segment 0: paddr=001f0020 vaddr=3f400020 size=1f8a0h (129184) map
-I (145) esp_image: segment 1: paddr=0020f8c8 vaddr=3ff80000 size=00020h (    32) load
-I (145) esp_image: segment 2: paddr=0020f8f0 vaddr=3ffb0000 size=00728h (  1832) load
-I (150) esp_image: segment 3: paddr=00210020 vaddr=400d0020 size=a25f8h (665080) map
-I (384) esp_image: segment 4: paddr=002b2620 vaddr=3ffb0728 size=03804h ( 14340) load
-I (389) esp_image: segment 5: paddr=002b5e2c vaddr=40080000 size=17e4ch ( 97868) load
-I (439) boot: Loaded app from partition at offset 0x1f0000
-I (439) boot: Disabling RNG early entropy source...
-I (450) cpu_start: Multicore app
-I (458) cpu_start: Pro cpu start user code
-I (458) cpu_start: cpu freq: 160000000 Hz
-I (458) app_init: Application information:
-I (458) app_init: Project name:     Juggernaut
-I (462) app_init: App version:      1
-I (466) app_init: Compile time:     Jan 21 2026 00:32:36
-I (471) app_init: ELF file SHA256:  03518688d...
-I (475) app_init: ESP-IDF:          5.5.0
-I (479) efuse_init: Min chip rev:     v0.0
-I (483) efuse_init: Max chip rev:     v3.99
-I (487) efuse_init: Chip rev:         v3.1
-I (491) heap_init: Initializing. RAM available for dynamic allocation:
-I (497) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
-I (502) heap_init: At 3FFB8B18 len 000274E8 (157 KiB): DRAM
-I (507) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
-I (513) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
-I (518) heap_init: At 40097E4C len 000081B4 (32 KiB): IRAM
-W (525) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
-I (534) spi_flash: detected chip: generic
-I (537) spi_flash: flash io: dio
-I (542) main_task: Started on CPU0
-I (552) main_task: Calling app_main()
-I (572) OTA_OPS: NVS Initialized.
-I (582) wifi:wifi driver task: 3ffc0bb4, prio:23, stack:6656, core=0
-I (592) wifi:wifi firmware version: f3dbad7
-I (592) wifi:wifi certification version: v7.0
-I (592) wifi:config NVS flash: enabled
-I (592) wifi:config nano formatting: disabled
-I (602) wifi:Init data frame dynamic rx buffer num: 32
-I (602) wifi:Init static rx mgmt buffer num: 5
-I (602) wifi:Init management short buffer num: 32
-I (612) wifi:Init dynamic tx buffer num: 32
-I (612) wifi:Init static rx buffer size: 1600
-I (622) wifi:Init static rx buffer num: 10
-I (622) wifi:Init dynamic rx buffer num: 32
-I (632) wifi_init: rx ba win: 6
-I (632) wifi_init: accept mbox: 6
-I (632) wifi_init: tcpip mbox: 32
-I (632) wifi_init: udp mbox: 6
-I (642) wifi_init: tcp mbox: 6
-I (642) wifi_init: tcp tx win: 5760
-I (642) wifi_init: tcp rx win: 5760
-I (642) wifi_init: tcp mss: 1440
-I (652) wifi_init: WiFi IRAM OP enabled
-I (652) wifi_init: WiFi RX IRAM OP enabled
-I (662) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
-I (742) wifi:mode : sta (88:13:bf:24:3c:24)
-I (752) wifi:enable tsf
-I (752) OTA_OPS: WiFi init finished.
-I (762) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (762) wifi:state: init -> auth (0xb0)
-I (772) wifi:state: auth -> assoc (0x0)
-I (782) wifi:state: assoc -> run (0x10)
-I (812) wifi:connected with JAYANTH, aid = 6, channel 11, BW20, bssid = 2e:33:58:8c:88:ef
-I (812) wifi:security: WPA2-PSK, phy: bgn, rssi: -26
-I (812) wifi:pm start, type: 1
+I (4661) OTA_OPS: Manifest — version: 1.1.4, size: 1010032, sha256: 8661FAAEB448FB43
+I (4671) OTA_OPS: Version check — server: 1.1.4; client: 1.1.4
+I (4681) OTA_OPS: Firmware up to date.
+I (5081) MAIN: Initialization Complete.
+I (5081) TASK_OPS: Timer started at: 4528706 us
+I (5081) MAIN: Blinker Task 1 : min free stack = 3800 words
+I (5081) TASK_OPS: Current time: 0 s
+I (5081) MAIN: Blinker Task 2 : min free stack = 3572 words
+I (5091) MAIN: Countdown Task : min free stack = 2252 words
+I (5091) MAIN: Watchdog Task : min free stack = 7696 words
+I (5101) MAIN: Main Task : min free stack = 196 words
+E (6081) WDT_OPS: Unresponsive Task: Name = blinker_1_task, ID = 1 || Threshold = 100, Elapsed Time = 480
+E (6081) WDT_OPS: Non-Critical Task Fail: Terminating Task blinker_1_task
+E (6091) WDT_OPS: Task Termination Fail: Rollback
+W (6101) OTA_OPS: Blacklisted bad firmware version: 1.1.4
+I (6481) esp_ota_ops: Rollback to previously worked partition.
+I (6481) wifi:state: run -> init (0x0)
+I (6481) wifi:pm stop, total sleep time: 3498592 us / 4462759 us
 
-I (812) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
-I (852) wifi:AP's beacon interval = 102400 us, DTIM period = 3
-I (1852) esp_netif_handlers: sta ip: 192.168.137.120, mask: 255.255.255.0, gw: 192.168.137.1
-I (1852) OTA_OPS: Got IP:192.168.137.120
-I (1852) OTA_OPS: Connected to WiFi SSID:JAYANTH
-I (1852) OTA_OPS: Running validated firmware (state: VALID)
-I (1862) OTA_OPS: Running partition: app1 (type 0, subtype 17, offset 0x001f0000)
-I (1872) OTA_OPS: Configured boot partition: app1
-I (1872) OTA_OPS: Next update partition: app0
-I (1872) OTA_OPS: Running firmware version: 1
-I (1882) OTA_OPS: Compile time: Jan 21 2026 00:32:36
-I (6912) OTA_OPS: Server Firmware Version: 29
-I (6912) OTA_OPS: Client Firmware Version: 29
-I (6912) OTA_OPS: Auth Success: Token Verified.
-I (6992) wifi:<ba-add>idx:0 (ifx:0, 2e:33:58:8c:88:ef), tid:0, ssn:10, winSize:64
-I (7012) OTA_OPS: Update Partition: app0
-I (20842) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1f8a0h (129184) map
-I (20882) esp_image: segment 1: paddr=0002f8c8 vaddr=3ff80000 size=00020h (    32) 
-I (20882) esp_image: segment 2: paddr=0002f8f0 vaddr=3ffb0000 size=00728h (  1832)
-I (20892) esp_image: segment 3: paddr=00030020 vaddr=400d0020 size=a25ech (665068) map
-I (21122) esp_image: segment 4: paddr=000d2614 vaddr=3ffb0728 size=03804h ( 14340) 
-I (21122) esp_image: segment 5: paddr=000d5e20 vaddr=40080000 size=17e4ch ( 97868)
-I (21162) OTA_OPS: HTTP OTA finished; Set boot partition.
-I (21162) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1f8a0h (129184) map
-I (21202) esp_image: segment 1: paddr=0002f8c8 vaddr=3ff80000 size=00020h (    32) 
-I (21202) esp_image: segment 2: paddr=0002f8f0 vaddr=3ffb0000 size=00728h (  1832)
-I (21202) esp_image: segment 3: paddr=00030020 vaddr=400d0020 size=a25ech (665068) map
-I (21422) esp_image: segment 4: paddr=000d2614 vaddr=3ffb0728 size=03804h ( 14340) 
-I (21432) esp_image: segment 5: paddr=000d5e20 vaddr=40080000 size=17e4ch ( 97868) 
-I (21512) OTA_OPS: OTA Success, Rebooting.
-I (24512) wifi:state: run -> init (0x0)
-I (24522) wifi:pm stop, total sleep time: 10131678 us / 23705681 us
-
-I (24522) wifi:<ba-del>idx:0, tid:0
-I (24522) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (24562) wifi:flush txq
-I (24562) wifi:stop sw txq
-I (24562) wifi:lmac stop hw txq
+I (6481) wifi:<ba-del>idx:0, tid:0
+I (6481) wifi:new:<6,0>, old:<6,0>, ap:<255,255>, sta:<6,0>, prof:1, snd_ch_cfg:0x0
+I (6541) wifi:flush txq
+I (6541) wifi:stop sw txq
+I (6541) wifi:lmac stop hw txq
 ets Jul 29 2019 12:21:46
 
 rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
@@ -742,7 +310,7 @@ load:0x40080400,len:3860
 
 entry 0x40080630
 I (29) boot: ESP-IDF 5.5.0 2nd stage bootloader
-I (29) boot: compile time Jan 21 2026 00:35:01
+I (29) boot: compile time Mar  5 2026 16:27:57
 I (29) boot: Multicore bootloader
 I (30) boot: chip revision: v3.1
 I (33) boot.esp32: SPI Speed      : 40MHz
@@ -757,231 +325,136 @@ I (71) boot:  2 app0             OTA app          00 10 00010000 001e0000
 I (77) boot:  3 app1             OTA app          00 11 001f0000 001e0000
 I (84) boot:  4 spiffs           Unknown data     01 82 003d0000 00003000
 I (90) boot: End of partition table
-I (93) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1f8a0h (129184) map
-I (145) esp_image: segment 1: paddr=0002f8c8 vaddr=3ff80000 size=00020h (    32) load
-I (145) esp_image: segment 2: paddr=0002f8f0 vaddr=3ffb0000 size=00728h (  1832) load
-I (150) esp_image: segment 3: paddr=00030020 vaddr=400d0020 size=a25ech (665068) map
-I (384) esp_image: segment 4: paddr=000d2614 vaddr=3ffb0728 size=03804h ( 14340) load
-I (389) esp_image: segment 5: paddr=000d5e20 vaddr=40080000 size=17e4ch ( 97868) load
-I (439) boot: Loaded app from partition at offset 0x10000
-I (439) boot: Disabling RNG early entropy source...
-I (450) cpu_start: Multicore app
-I (458) cpu_start: Pro cpu start user code
-I (458) cpu_start: cpu freq: 160000000 Hz
-I (458) app_init: Application information:
-I (458) app_init: Project name:     Juggernaut
-I (462) app_init: App version:      1
-I (466) app_init: Compile time:     Jan 21 2026 00:32:36
-I (471) app_init: ELF file SHA256:  33b76db9d...
-I (475) app_init: ESP-IDF:          5.5.0
-I (479) efuse_init: Min chip rev:     v0.0
-I (483) efuse_init: Max chip rev:     v3.99
-I (487) efuse_init: Chip rev:         v3.1
-I (491) heap_init: Initializing. RAM available for dynamic allocation:
-I (497) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
-I (502) heap_init: At 3FFB8B18 len 000274E8 (157 KiB): DRAM
-I (507) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
-I (512) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
-I (518) heap_init: At 40097E4C len 000081B4 (32 KiB): IRAM
-W (525) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
-I (534) spi_flash: detected chip: generic
-I (537) spi_flash: flash io: dio
-I (541) main_task: Started on CPU0
-I (551) main_task: Calling app_main()
-I (571) OTA_OPS: NVS Initialized.
-I (581) wifi:wifi driver task: 3ffc0bb4, prio:23, stack:6656, core=0
-I (591) wifi:wifi firmware version: f3dbad7
-I (591) wifi:wifi certification version: v7.0
-I (591) wifi:config NVS flash: enabled
-I (591) wifi:config nano formatting: disabled
-I (591) wifi:Init data frame dynamic rx buffer num: 32
-I (601) wifi:Init static rx mgmt buffer num: 5
-I (601) wifi:Init management short buffer num: 32
-I (611) wifi:Init dynamic tx buffer num: 32
-I (611) wifi:Init static rx buffer size: 1600
-I (621) wifi:Init static rx buffer num: 10
-I (621) wifi:Init dynamic rx buffer num: 32
-I (631) wifi_init: rx ba win: 6
-I (631) wifi_init: accept mbox: 6
-I (631) wifi_init: tcpip mbox: 32
-I (631) wifi_init: udp mbox: 6
-I (641) wifi_init: tcp mbox: 6
-I (641) wifi_init: tcp tx win: 5760
-I (641) wifi_init: tcp rx win: 5760
-I (641) wifi_init: tcp mss: 1440
-I (651) wifi_init: WiFi IRAM OP enabled
-I (651) wifi_init: WiFi RX IRAM OP enabled
-I (661) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
-I (741) wifi:mode : sta (88:13:bf:24:3c:24)
-I (751) wifi:enable tsf
-I (751) OTA_OPS: WiFi init finished.
-I (761) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (761) wifi:state: init -> auth (0xb0)
-I (771) wifi:state: auth -> assoc (0x0)
-I (781) wifi:state: assoc -> run (0x10)
-I (801) wifi:connected with JAYANTH, aid = 7, channel 11, BW20, bssid = 2e:33:58:8c:88:ef
-I (801) wifi:security: WPA2-PSK, phy: bgn, rssi: -31
-I (811) wifi:pm start, type: 1
+I (93) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=31280h (201344) map
+I (170) esp_image: segment 1: paddr=000412a8 vaddr=3ff80000 size=00020h (    32) load
+I (170) esp_image: segment 2: paddr=000412d0 vaddr=3ffb0000 size=03f2ch ( 16172) load
+I (180) esp_image: segment 3: paddr=00045204 vaddr=40080000 size=0ae14h ( 44564) load
+I (198) esp_image: segment 4: paddr=00050020 vaddr=400d0020 size=a9914h (694548) map
+I (436) esp_image: segment 5: paddr=000f993c vaddr=4008ae14 size=0d070h ( 53360) load
+I (469) boot: Loaded app from partition at offset 0x10000
+I (469) boot: Disabling RNG early entropy source...
+I (479) cpu_start: Multicore app
+I (487) cpu_start: Pro cpu start user code
+I (487) cpu_start: cpu freq: 160000000 Hz
+I (488) app_init: Application information:
+I (488) app_init: Project name:     Juggernaut
+I (492) app_init: App version:      1.0.3
+I (495) app_init: Compile time:     Mar  8 2026 19:00:07
+I (501) app_init: ELF file SHA256:  f02a81e64...
+I (505) app_init: ESP-IDF:          5.5.0
+I (509) efuse_init: Min chip rev:     v0.0
+I (512) efuse_init: Max chip rev:     v3.99
+I (516) efuse_init: Chip rev:         v3.1
+I (521) heap_init: Initializing. RAM available for dynamic allocation:
+I (527) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (532) heap_init: At 3FFB8C28 len 000273D8 (156 KiB): DRAM
+I (537) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (542) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (548) heap_init: At 40097E84 len 0000817C (32 KiB): IRAM
+W (554) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
+I (563) spi_flash: detected chip: generic
+I (567) spi_flash: flash io: dio
+I (571) main_task: Started on CPU0
+I (581) main_task: Calling app_main()
+I (601) OTA_OPS: NVS initialized.
+I (611) wifi:wifi driver task: 3ffc0c40, prio:23, stack:6656, core=0
+I (621) wifi:wifi firmware version: f3dbad7
+I (621) wifi:wifi certification version: v7.0
+I (621) wifi:config NVS flash: enabled
+I (621) wifi:config nano formatting: disabled
+I (631) wifi:Init data frame dynamic rx buffer num: 32
+I (631) wifi:Init static rx mgmt buffer num: 5
+I (631) wifi:Init management short buffer num: 32
+I (641) wifi:Init dynamic tx buffer num: 32
+I (641) wifi:Init static rx buffer size: 1600
+I (651) wifi:Init static rx buffer num: 10
+I (651) wifi:Init dynamic rx buffer num: 32
+I (661) wifi_init: rx ba win: 6
+I (661) wifi_init: accept mbox: 6
+I (661) wifi_init: tcpip mbox: 32
+I (661) wifi_init: udp mbox: 6
+I (671) wifi_init: tcp mbox: 6
+I (671) wifi_init: tcp tx win: 5760
+I (671) wifi_init: tcp rx win: 5760
+I (681) wifi_init: tcp mss: 1440
+I (681) wifi_init: WiFi IRAM OP enabled
+I (681) wifi_init: WiFi RX IRAM OP enabled
+I (691) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
+I (781) wifi:mode : sta (88:13:bf:24:3c:24)
+I (781) wifi:enable tsf
+I (781) OTA_OPS: WiFi init done.
+I (791) wifi:new:<6,0>, old:<1,0>, ap:<255,255>, sta:<6,0>, prof:1, snd_ch_cfg:0x0
+I (791) wifi:state: init -> auth (0xb0)
+I (1971) wifi:state: auth -> assoc (0x0)
+I (1981) wifi:state: assoc -> run (0x10)
+I (1991) wifi:connected with Jayanth, aid = 1, channel 6, BW20, bssid = f2:85:0c:51:e6:4a
+I (2001) wifi:security: WPA3-SAE, phy: bgn, rssi: -30
+I (2001) wifi:pm start, type: 1
 
-I (811) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
-I (861) wifi:AP's beacon interval = 102400 us, DTIM period = 3
-I (1861) esp_netif_handlers: sta ip: 192.168.137.120, mask: 255.255.255.0, gw: 192.168.137.1
-I (1861) OTA_OPS: Got IP:192.168.137.120
-I (1861) OTA_OPS: Connected to WiFi SSID:JAYANTH
-I (1861) OTA_OPS: New Firmware.
-I (1871) TAG: Client Version: 29
-I (1931) OTA_OPS: Running partition: app0 (type 0, subtype 16, offset 0x00010000)
-I (1931) OTA_OPS: Configured boot partition: app0
-I (1931) OTA_OPS: Next update partition: app1
-I (1931) OTA_OPS: Running firmware version: 1
-I (1931) OTA_OPS: Compile time: Jan 21 2026 00:32:36
-                                                                (9761) wifi:<ba-add>idx:0 (ifx:0, 2e:33:58:8c:88:ef), tid:0, ssn:8, winSize:64
-I (9771) OTA_OPS: Server Firmware Version: 29
-I (9771) OTA_OPS: Client Firmware Version: 30
-I (9771) OTA_OPS: Version mismatch: server=29, client=30
-I (10181) MAIN: Initialization Complete.
-I (10181) TASK_OPS: Timer started at: 9658732 us
-I (10181) TASK_OPS: Current time: 0 s
-E (11181) WDT_OPS: Unresponsive Task: Name = countdown_task, ID = 0 || Threshold = 500, Elapsed Time = 1000
-E (11181) WDT_OPS: Critical Task Fail: Rollback
-I (11531) esp_ota_ops: Rollback to previously worked partition.
-I (11531) wifi:state: run -> init (0x0)
-I (11531) wifi:pm stop, total sleep time: 9347407 us / 10723536 us
+I (2001) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (2011) wifi:<ba-add>idx:0 (ifx:0, f2:85:0c:51:e6:4a), tid:0, ssn:0, winSize:64
+I (2051) wifi:dp: 2, bi: 102400, li: 4, scale listen interval from 307200 us to 409600 us
+I (2061) wifi:AP's beacon interval = 102400 us, DTIM period = 2
+I (3041) esp_netif_handlers: sta ip: 10.135.112.222, mask: 255.255.255.0, gw: 10.135.112.25
+I (3041) OTA_OPS: Got IP: 10.135.112.222
+I (3041) OTA_OPS: Connected to SSID: Jayanth
+I (3051) OTA_OPS: Running validated firmware.
+I (3051) OTA_OPS: Running partition : app0  (type 0, subtype 16, offset 0x00010000)
+I (3051) OTA_OPS: Firmware version  : 1.0.3  (built Mar  8 2026 19:00:07)
+I (3061) OTA_OPS: Boot partition    : app0
+I (3061) OTA_OPS: Next update slot  : app1
+I (4031) esp-x509-crt-bundle: Certificate validated
+I (4941) OTA_OPS: Manifest received:
 
-I (11531) wifi:<ba-del>idx:0, tid:0
-I (11531) wifi:new:<11,0>, old:<11,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (11571) wifi:flush txq
-I (11571) wifi:stop sw txq
-I (11571) wifi:lmac stop hw txq
-ets Jul 29 2019 12:21:46
+{
+  "version": "1.1.4",
+  "sha256": "8661FAAEB448FB430A8D3ED9ABEED5760AE2D4776BCBF3917ACF1AC7FB624266",
+  "size": 1010032,
+  "url": "firmware.bin"
+}
 
-rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
-configsip: 0, SPIWP:0xee
-clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
-mode:DIO, clock div:2
-load:0x3fff0030,len:6380
-ho 0 tail 12 room 4
-load:0x40078000,len:15916
-load:0x40080400,len:3860
-  #0  0x40080400 in _invalid_pc_placeholder at C:\Users\jayan\.platformio\packages\framework-espidf\components\xtensa/xtensa_vectors.S:2235
-
-entry 0x40080630
-I (29) boot: ESP-IDF 5.5.0 2nd stage bootloader
-I (29) boot: compile time Jan 21 2026 00:35:01
-I (29) boot: Multicore bootloader
-I (30) boot: chip revision: v3.1
-I (33) boot.esp32: SPI Speed      : 40MHz
-I (37) boot.esp32: SPI Mode       : DIO
-I (40) boot.esp32: SPI Flash Size : 4MB
-I (44) boot: Enabling RNG early entropy source...
-I (49) boot: Partition Table:
-I (51) boot: ## Label            Usage          Type ST Offset   Length
-I (57) boot:  0 nvs              WiFi data        01 02 00009000 00005000
-I (64) boot:  1 otadata          OTA data         01 00 0000e000 00002000
-I (71) boot:  2 app0             OTA app          00 10 00010000 001e0000
-I (77) boot:  3 app1             OTA app          00 11 001f0000 001e0000
-I (84) boot:  4 spiffs           Unknown data     01 82 003d0000 00003000
-I (90) boot: End of partition table
-I (93) esp_image: segment 0: paddr=001f0020 vaddr=3f400020 size=1f8a0h (129184) map
-I (145) esp_image: segment 1: paddr=0020f8c8 vaddr=3ff80000 size=00020h (    32) load
-I (145) esp_image: segment 2: paddr=0020f8f0 vaddr=3ffb0000 size=00728h (  1832) load
-I (150) esp_image: segment 3: paddr=00210020 vaddr=400d0020 size=a25f8h (665080) map
-I (384) esp_image: segment 4: paddr=002b2620 vaddr=3ffb0728 size=03804h ( 14340) load
-I (389) esp_image: segment 5: paddr=002b5e2c vaddr=40080000 size=17e4ch ( 97868) load
-I (439) boot: Loaded app from partition at offset 0x1f0000
-I (439) boot: Disabling RNG early entropy source...
-I (450) cpu_start: Multicore app
-I (458) cpu_start: Pro cpu start user code
-I (458) cpu_start: cpu freq: 160000000 Hz
-I (458) app_init: Application information:
-I (458) app_init: Project name:     Juggernaut
-I (462) app_init: App version:      1
-I (466) app_init: Compile time:     Jan 21 2026 00:32:36
-I (471) app_init: ELF file SHA256:  03518688d...
-I (475) app_init: ESP-IDF:          5.5.0
-I (479) efuse_init: Min chip rev:     v0.0
-I (483) efuse_init: Max chip rev:     v3.99
-I (487) efuse_init: Chip rev:         v3.1
-I (491) heap_init: Initializing. RAM available for dynamic allocation:
-I (497) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
-I (502) heap_init: At 3FFB8B18 len 000274E8 (157 KiB): DRAM
-I (507) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
-I (512) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
-I (518) heap_init: At 40097E4C len 000081B4 (32 KiB): IRAM
-W (525) spi_flash: boya detected but related driver is not linked, please check option `SPI_FLASH_SUPPORT_BOYA_CHIP`
-I (534) spi_flash: detected chip: generic
-I (537) spi_flash: flash io: dio
-I (541) main_task: Started on CPU0
-I (551) main_task: Calling app_main()
-I (571) OTA_OPS: NVS Initialized.
-I (581) wifi:wifi driver task: 3ffc0bb4, prio:23, stack:6656, core=0
-I (591) wifi:wifi firmware version: f3dbad7
-I (591) wifi:wifi certification version: v7.0
-I (591) wifi:config NVS flash: enabled
-I (591) wifi:config nano formatting: disabled
-I (601) wifi:Init data frame dynamic rx buffer num: 32
-I (601) wifi:Init static rx mgmt buffer num: 5
-I (601) wifi:Init management short buffer num: 32
-I (611) wifi:Init dynamic tx buffer num: 32
-I (611) wifi:Init static rx buffer size: 1600
-I (621) wifi:Init static rx buffer num: 10
-I (621) wifi:Init dynamic rx buffer num: 32
-I (631) wifi_init: rx ba win: 6
-I (631) wifi_init: accept mbox: 6
-I (631) wifi_init: tcpip mbox: 32
-I (631) wifi_init: udp mbox: 6
-I (641) wifi_init: tcp mbox: 6
-I (641) wifi_init: tcp tx win: 5760
-I (641) wifi_init: tcp rx win: 5760
-I (641) wifi_init: tcp mss: 1440
-I (651) wifi_init: WiFi IRAM OP enabled
-I (651) wifi_init: WiFi RX IRAM OP enabled
-I (661) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07
-I (751) wifi:mode : sta (88:13:bf:24:3c:24)
-I (751) wifi:enable tsf
-I (751) OTA_OPS: WiFi init finished.
-I (761) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
-I (761) wifi:state: init -> auth (0xb0)
-I (801) wifi:state: auth -> assoc (0x0)
-I (801) wifi:state: assoc -> run (0x10)
-I (841) wifi:connected with JAYANTH, aid = 8, channel 11, BW20, bssid = 2e:33:58:8c:88:ef
-I (841) wifi:security: WPA2-PSK, phy: bgn, rssi: -31
-I (841) wifi:pm start, type: 1
-
-I (841) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
-I (851) wifi:AP's beacon interval = 102400 us, DTIM period = 3
-I (2161) esp_netif_handlers: sta ip: 192.168.137.120, mask: 255.255.255.0, gw: 192.168.137.1
-I (2161) OTA_OPS: Got IP:192.168.137.120
-I (2161) OTA_OPS: Connected to WiFi SSID:JAYANTH
-I (2161) OTA_OPS: Running validated firmware (state: VALID)
-I (2171) OTA_OPS: Running partition: app1 (type 0, subtype 17, offset 0x001f0000)
-I (2181) OTA_OPS: Configured boot partition: app1
-I (2181) OTA_OPS: Next update partition: app0
-I (2181) OTA_OPS: Running firmware version: 1
-I (2191) OTA_OPS: Compile time: Jan 21 2026 00:32:36
-I (7221) OTA_OPS: Server Firmware Version: 29
-I (7221) OTA_OPS: Client Firmware Version: 30
-I (7221) OTA_OPS: Version mismatch: server=29, client=30
-I (7291) wifi:<ba-add>idx:0 (ifx:0, 2e:33:58:8c:88:ef), tid:0, ssn:9, winSize:64
-I (7621) MAIN: Initialization Complete.
-I (7621) TASK_OPS: Timer started at: 7098755 us
-I (7621) TASK_OPS: Current time: 0 s
-I (12621) TASK_OPS: Blinker Task 1 Active.
-I (17621) TASK_OPS: Current time: 10 s
-I (19121) TASK_OPS: Blinker Task 2 Active.
-I (25121) TASK_OPS: Blinker Task 1 Active.
-I (27621) TASK_OPS: Current time: 20 s
-I (31621) TASK_OPS: Blinker Task 2 Active.
-                                                                (37621) TASK_OPS: Current time: 30 s
-I (37621) TASK_OPS: Blinker Task 1 Active.
-                                                                121) TASK_OPS: Blinker Task 2 Active.
-I (47621) TASK_OPS: Current time: 40 s
-I (50121) TASK_OPS: Blinker Task 1 Active.
-I (56621) TASK_OPS: Blinker Task 2 Active.
-I (57621) TASK_OPS: Current time: 50 s
-I (62621) TASK_OPS: Blinker Task 1 Active.
-I (67621) TASK_OPS: Current time: 60 s
-I (69121) TASK_OPS: Blinker Task 2 Active.
-I (75121) TASK_OPS: Blinker Task 1 Active.
-I (77621) TASK_OPS: Current time: 70 s
-I (81621) TASK_OPS: Blinker Task 2 Active.
+I (4951) OTA_OPS: Manifest — version: 1.1.4  size: 1010032  sha256: 8661FAAEB448FB43...
+I (4961) OTA_OPS: Version check — server: 1.1.4  |  client: 1.0.3
+W (4971) OTA_OPS: Server version 1.1.4 is blacklisted — skipping.
+I (5371) MAIN: Initialization Complete.
+I (5371) TASK_OPS: Timer started at: 4818719 us
+I (5371) MAIN: Blinker Task 1 : min free stack = 3804 words
+I (5371) TASK_OPS: Current time: 0 s
+I (5371) MAIN: Blinker Task 2 : min free stack = 3576 words
+I (5381) MAIN: Countdown Task : min free stack = 2240 words
+I (5381) MAIN: Watchdog Task : min free stack = 7700 words
+I (5391) MAIN: Main Task : min free stack = 196 words
+I (10481) TASK_OPS: Blinker Task 1 Active.
+I (15371) TASK_OPS: Current time: 10 s
+I (17081) TASK_OPS: Blinker Task 2 Active.
+I (23181) TASK_OPS: Blinker Task 1 Active.
+I (25371) TASK_OPS: Current time: 20 s
+I (29781) TASK_OPS: Blinker Task 2 Active.
+I (35371) TASK_OPS: Current time: 30 s
+I (35881) TASK_OPS: Blinker Task 1 Active.
+I (42481) TASK_OPS: Blinker Task 2 Active.
+I (45371) TASK_OPS: Current time: 40 s
+I (48581) TASK_OPS: Blinker Task 1 Active.
+I (55181) TASK_OPS: Blinker Task 2 Active.
+I (55371) TASK_OPS: Current time: 50 s
+I (61281) TASK_OPS: Blinker Task 1 Active.
+I (65371) TASK_OPS: Current time: 60 s
+I (67881) TASK_OPS: Blinker Task 2 Active.
+I (73981) TASK_OPS: Blinker Task 1 Active.
+I (75371) TASK_OPS: Current time: 70 s
+I (80581) TASK_OPS: Blinker Task 2 Active.
+I (85371) TASK_OPS: Current time: 80 s
+I (86681) TASK_OPS: Blinker Task 1 Active.
+I (93281) TASK_OPS: Blinker Task 2 Active.
+I (95371) TASK_OPS: Current time: 90 s
+I (99381) TASK_OPS: Blinker Task 1 Active.
+I (105371) TASK_OPS: Current time: 100 s
+I (105981) TASK_OPS: Blinker Task 2 Active.
+I (112081) TASK_OPS: Blinker Task 1 Active.
+I (115371) TASK_OPS: Current time: 110 s
+I (118681) TASK_OPS: Blinker Task 2 Active.
+I (124781) TASK_OPS: Blinker Task 1 Active.
+I (125371) TASK_OPS: Current time: 120 s
+I (131381) TASK_OPS: Blinker Task 2 Active.
+I (135371) TASK_OPS: Current time: 130 s
+I (137481) TASK_OPS: Blinker Task 1 Active.
