@@ -8,9 +8,11 @@
 //Function Prototypes
 void watchdog(void *pvParameters);
 void wdt_feed(uint8_t);
-uint8_t task_register(const char*, uint32_t, uint8_t);
+uint8_t task_register(const char*, uint32_t, bool, uint32_t);
 void task_helper(TaskHandle_t, uint8_t);
 
-extern TaskHandle_t watchdog_handle; //Handles
+//Handles
+extern TaskHandle_t watchdog_handle;
+extern void (*rollback)(void);
 
 #endif

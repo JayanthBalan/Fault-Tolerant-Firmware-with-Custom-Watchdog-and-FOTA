@@ -14,6 +14,9 @@ void countdown(void *pvParameters);
 //Watchdog Feeder
 extern void (*feed_dog)(uint8_t);
 
+//Watchdog Task
+extern TaskHandle_t *wdt_handle;
+
 //Task Handles
 extern TaskHandle_t blinker_1_handle;
 extern TaskHandle_t blinker_2_handle;
